@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:12
+    container_name: web-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "password"
+
+  django:
+    build: ./own_info
+    container_name: web-django
+    restart: always
+    stdin_open: true
+    tty: true
+    depends_on:
+      - "postgres"
+    volumes:
+      - ./own_info:/code
+    environment:
+      PYTHONUNBUFFERED: 1
+      DJANGO_SECRET: "Q3d5ymmEjNBw37XQdL4xeRVvDCxgvqFrisALR4bng-0" # *** CHANGE THIS ***
+    ports:
+      - "127.0.0.1:8000:8000"
