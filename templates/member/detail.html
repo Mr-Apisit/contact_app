@@ -5,28 +5,32 @@
 <br>
     <div class="article-banner text-center"></div>
         <br><br>
+
         <div class="col-12 pb-4 text-dark text-center">
-        <div class="row">
-        <div class="col-sm-12 my-auto">
-            <img src="{{ member.profile_picture.url }}" class="img-fluid rounded"
-                alt="{{ member.nick_name }}">
-                <br>
-                <br>
-        </div>
-            <div class="container">
-                <h1 class="font-weight-bold">{{ member.position }}</h1>
-                <p></p>
-                <p class="font-weight-bold" style="font-size:20px">{{ member.title.name }} {{ member.first_name }} {{ member.last_name }}</p>
-                <p class="font-weight-bold" style="font-size:20px">โทรติดต่อ : {{member.phone}}</p>
-            </div>    
-            <div class="container">
-                <br>
-                <h3 class="font-weight-bold">ทักษะความถนัด</h3>
-                <br>
-                <p>{{ member.member_content|safe }}</p>
-            </div>
-        </div>
-    </div>
+
+            <div class="row">
+                    <div class="col-sm-12 my-auto">
+                        <img src="{{ member.profile_picture.url }}" class="img-fluid rounded"
+                            alt="{{ member.nick_name }}">
+                            <br>
+                            <br>
+                        </img>
+                    </div>
+                    <div class="container">
+                        <h1 class="font-weight-bold">{{ member.position }}</h1>
+                        <p></p>
+                        <p class="font-weight-bold" style="font-size:20px">{{ member.title.name }} {{ member.first_name }} {{ member.last_name }}</p>
+                        <p class="font-weight-bold" style="font-size:20px">โทรติดต่อ : {{member.phone}}</p>
+                    </div>    
+                </div>
+           
+                </div>
+    </div> 
+    <div class="container">
+                    <br>
+                    <h3 class="font-weight-bold">ทักษะความถนัด</h3>
+                    <br>
+                    <p>{{ member.member_content|safe }}</p>
 
 
 
