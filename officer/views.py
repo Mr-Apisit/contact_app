@@ -65,12 +65,14 @@ def home(request):
     insert_member_obj = paginator.get_page(page_number) 
     return render(request, "member/home.html", {'member':insert_member_obj , 'department':department })
 
-#******************* 👍  main QUERY *************************#
+#******************* 👍  QUERY DEPARTMENT *************************#
 
 @login_required(login_url='sign_in')
 def zone(request):
     department = Department.objects.all()
     return render(request=request, template_name="member/zone.html", context={'department': department})
+
+#******************* 👍 QUERY MEMBER  *************************#
 
 @login_required(login_url='sign_in')
 def member(request):
@@ -91,10 +93,17 @@ def blog_member(request):
 
     return render(request, "member/search_member.html", context={'insert_member': insert_member_obj})
 
-#******************* 👍 QUERY MEMBER  *************************#
-
+def detail_member(request, member_phone):
+    member = Member.objects.get(phone=member_phone)
+    return render(request,'member/detail.html', {'member':member})
 
 #******************* 👍 QUERY MEMBER BY DEPARTMENT  *************************#
+
+# @login_required(login_url='sign_in')
+# def list_member_by_location(request, short_name):
+#     department = Department.objects.all()
+#     member = Member.objects.get(location__short_name=short_name)
+#     return render(request, 'member/member.html', {'member':member})
 
 @login_required(login_url='sign_in')
 def member_by_department_ENGINEER(request):
@@ -103,18 +112,22 @@ def member_by_department_ENGINEER(request):
     
     return render(request, 'member/zone3/list_member.html', {'member': member, 'department': department})
 
+@login_required(login_url='sign_in')
 def member_by_department_SUPPORT(request):
+    
     department = Department.objects.all()
     member = Member.objects.filter(location__short_name="กบสซ.")    
     
     return render(request, 'member/zone1/list_member.html', {'member': member, 'department': department})
 
+@login_required(login_url='sign_in')
 def member_by_department_STANDARD(request):
     department = Department.objects.all()
     member = Member.objects.filter(location__short_name="กมซ.")    
     
     return render(request, 'member/zone2/list_member.html', {'member': member, 'department': department})
 
+@login_required(login_url='sign_in')
 def member_by_department_COMMAND(request):
     department = Department.objects.all()
     member = Member.objects.filter(location__short_name="สบช.")    

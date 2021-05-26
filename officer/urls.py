@@ -13,13 +13,14 @@ urlpatterns = [
     path('login/', views.signIn_request, name="sign_in"),
     path("logout/", views.logout_request, name= "sign_out"),
     path('zone/', views.zone, name= "zone"),
-    path('people/', views.member, name="member"),
+    path('member/', views.member, name="member"),
     path('member/', views.blog_member, name="blog_member"),
-    # path('add_member/', views.insert_member, name="insert_member"),
-    path('home/กบสซ.', views.member_by_department_SUPPORT, name='บูรณาการ'),
-    path('home/กมซ.', views.member_by_department_STANDARD, name='มาตรฐาน'),
-    path('home/กวซ.', views.member_by_department_ENGINEER, name='วิศวกรรม'),
-    path('home/สบช.', views.member_by_department_COMMAND, name='สั่งการ'),
+    path('member/<member_phone>', views.detail_member, name="detail"),
+    # path('home/<short_name>', views.list_member_by_location, name="list_by_locate"),
+    path('zone/กบสซ.', views.member_by_department_SUPPORT, name='บูรณาการ'),
+    path('zone/กมซ.', views.member_by_department_STANDARD, name='มาตรฐาน'),
+    path('zone/กวซ.', views.member_by_department_ENGINEER, name='วิศวกรรม'),
+    path('zone/สบช.', views.member_by_department_COMMAND, name='สั่งการ'),
     
 # path('member')
 

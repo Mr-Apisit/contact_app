@@ -23,11 +23,11 @@ from django.contrib.auth.views import LoginView
 urlpatterns = [
 
     path('', include('officer.urls')),
-    path('friends/', include('officer.urls')),
-    path('register/', include('officer.urls')),
-    path('login/', include('officer.urls')),
-    path('logout/', include('officer.urls')),
-    path('member/', include('officer.urls')),
+    # path('friends/', include('officer.urls')),
+    # path('register/', include('officer.urls')),
+    # path('login/', include('officer.urls')),
+    # path('logout/', include('officer.urls')),
+    # path('member/', include('officer.urls')),
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
 

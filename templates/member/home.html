@@ -7,8 +7,6 @@
 
 <!-- CTA -->
 <br>
-
-<br>
 <div class="cta-banner">
 	<div class="container py-6">
 		<div class="row">
@@ -20,8 +18,8 @@
 				<br>
 				<br>
 				<h1 class="display-4 font-weight-bold">ศซว.ทอ.</h1>
-				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ ศูนย์ที่รวบร่วมบุคลากรมากความสามารถด้านการ ผลิด คิดค้นและ พัฒนาซอฟต์แวร์
-				</h5>
+				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ<br>ศูนย์ที่รวบร่วมบุคลากร<br>ที่มากความสามารถ<br>ในด้านการ ผลิด คิดค้นและ<br>พัฒนาซอฟต์แวร์</h5>
+
 				<a class="btn btn-primary mt-2" href="/member">หาคนร่วมทีม</a>
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6">
@@ -31,31 +29,28 @@
 
 	<!--หน่วยงาน-->
 	<div class="container py-3">
-		<br>
-		<br>
-		<br>
 
 		<br>
 		<br>
 		<br>
-		<br><br>
+		<br>
+		<br>
+		<br>
 		<h2>หน่วยงาน</h2>
 		<br>
-		<br>
-		<br>
-		<br>
+
 		<div class="row">
 			{% for p in department %}
-			<div class="col-sm-12 col-md-6 col-lg-3 pb-4">
+			<div class="col-sm-8 col-md-12 col-lg-4 pb-1">
 				<div class="card h-100" style="border:none">
 					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.product_name}}"
 						style="width: auto; height: 250px; object-fit: scale-down;">
 					<div class="card-body">
 						<h7 class="card-title">{{ p.name}}</h7>
-						
+
 						<p class="card-text text-muted" style="font-size:12px">{{ p.short_name}}</p>
 						<p class="card-text">{{ p.division }}</p>
-						<a href="{{ p.short_name}}" class="btn btn-warning">ดูเพิ่มเติม</a>
+						<a href="/zone/{{p.short_name}}" class="btn btn-warning">ดูสมาชิกกอง</a>
 					</div>
 				</div>
 			</div>
@@ -64,72 +59,77 @@
 	</div>
 	<!--member-->
 	<div class="cta-right">
-	<div class="container py-2">
-		<h1 class="font-weight-bold"></h1>
+		<div class="container py-2">
+			<h1 class="font-weight-bold">บุคลากร</h1>
 
-		<h2>บุคลากร</h2>
-		<br>
-		<br>
 
-		<div class="row">
-			{% for b in member %}
-			<div class="col-12 pb-4 text-dark">
-				<div class="row">
-					<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
-						<img src="{{ b.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
+			<br>
+			<br>
+
+			<div class="row">
+				{% for b in member %}
+				<a href="/member/{{ b.phone }}" style="text-decoration: none">
+					<div class="col-12 pb-4 text-dark">
+						<div class="row">
+							<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
+								<img src="{{ b.profile_picture.url }}" class="img-fluid rounded"
+									alt="{{ b.nick_name }}">
+							</div>
+							<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
+								<h5>{{ b.position }}</h5>
+								<p class="card-text text-muted" style="font-size:12px">{{ b.location }}</p>
+								<p class="card-text text-muted" style="font-size:12px">{{ b.title }} {{b.first_name}}
+									{{b.last_name}}</p>
+								<p>{{ b.member_content|safe|truncatewords:35 }}</p>
+								<button class="btn btn-outline-dark btn-sm">ดูโปรไฟล์</button>
+							</div>
+						</div>
 					</div>
-					<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
-						<h4>{{ b.position }}</h4>
-						<p class="card-text text-muted" style="font-size:12px">{{b.title.short_name}} {{ b.first_name }} {{ b.last_name }}
-						</p>
-						<p>{{ b.article_content|safe|truncatewords:25 }}</p>
-						<button class="btn btn-outline-dark btn-sm">View details</button>
-					</div>
-				</div>
+				</a>
+				{% endfor %}
 			</div>
-			{% endfor %}
 		</div>
 	</div>
-</div>
 
-<style>
-	.cta-banner {
-		background-image:
-		/* The image fade to white */
-		linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 85%),
-		/* The image used */
-		url("{% static "img/logo.png" %}");
-		/* Set a specific height */
-		height: 600px;
-		/* Create the parallax scrolling effect */
-		background-attachment: fixed;
-		background-position: center right;
-		background-repeat: no-repeat;
-		background-size: 640px;
-		z-index: auto;
-		position: relative;
-	}
+	<style>
+		.cta-banner {
+			background-image:
+			/* The image fade to white */
+			linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 60%),
+			/* The image used */
+			url("{% static "img/logo.png" %}");
+			/* Set a specific height */
+			height: 480px;
+			/* Create the parallax scrolling effect */
+			background-attachment: fixed;
+			background-position: right center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			z-index: auto;
+			position: relative;
+		}
+		</style>
+		<style>
+		.cta-right {
+			background-image:
+			/* The image fade to white */
+			linear-gradient(to left, rgba(0, 0, 0, 0) 5%, #fff 40%),
+			/* The image used */
+			url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
+			/* Set a specific height */
 
-	.cta-right {
-		background-image:
-		/* The image fade to white */
-		linear-gradient(to left, rgba(0, 0, 0, 0) 5%, #fff 40%),
-		/* The image used */
-		url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
-		/* Set a specific height */
-
-		/* Create the parallax scrolling effect */
-		background-attachment: fixed;
-		background-position: left bottom;
-		background-repeat: no-repeat;
-		background-size: cover;
-		z-index: auto;
-		position: relative;
-	}
-</style>
+			/* Create the parallax scrolling effect */
+			background-attachment: fixed;
+			background-position: left bottom;
+			background-repeat: no-repeat;
+			background-size: cover;
+			z-index: auto;
+			position: relative;
+		}
+	</style>
 
 
-{% endblock %}
+	{% endblock %}
 
-<!-- Optional Javascript -->
-...
+	<!-- Optional Javascript -->
+	...
