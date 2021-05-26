@@ -29,21 +29,29 @@
 		<br>
 		<br>
 		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div class="card-body">
+					
+				<a class="btn btn-outline-success">เพิ่มสมาชิก</a>
+				</div>
+			</div>
 			{% for p in member %}
-			<div class="col-sm-12 col-md-6 col-lg-3 pb-4">
+			<div class="col-sm-8 col-md-12 col-lg-4 pb-1">
 				<div class="card h-100" style="border:none">
 					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.nick_name}}"
 						style="width: auto; height: 250px; object-fit: scale-down;">
 					<div class="card-body">
-						<h5 class="card-title">{{ p.position}}</h5>
-						<p class="card-text text-muted" style="font-size:12px">{{ p.title}} {{ p.first_name}}  {{ p.last_name}}</p>
-						<p class="card-text">{{ p.location }}</p>
+						<h7 class="card-title">{{ p.position}}</h7>
+						<p class="card-text " style="font-size:14px">{{ p.title.short_name}} {{ p.first_name}}  {{ p.last_name}}</p>
+						<p class="card-text text-muted">{{ p.location }}</p>
                         <p class="card-text">ติดต่อ : {{ p.phone }}</p>
-						<a href="{{ p.affiliate_url }}" class="btn btn-warning">ดูเพิ่มเติม</a>
+						<a href="{{ p.phone }}" class="btn btn-warning">ดูโปรไฟล์</a>
 					</div>
 				</div>
 			</div>
 			{% endfor %}
+			
+
 		</div>
 	</div>
 

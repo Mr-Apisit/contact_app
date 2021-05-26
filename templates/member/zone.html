@@ -30,15 +30,16 @@
 		<br>
 		<div class="row">
 			{% for p in department %}
-			<div class="col-sm-12 col-md-6 col-lg-3 pb-4">
+			<div class="col-sm-8 col-md-12 col-lg-4 pb-1">
 				<div class="card h-100" style="border:none">
 					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.product_name}}"
 						style="width: auto; height: 250px; object-fit: scale-down;">
 					<div class="card-body">
-						<h5 class="card-title">{{ p.name}}</h5>
+						<h7 class="card-title">{{ p.name}}</h7>
+
 						<p class="card-text text-muted" style="font-size:12px">{{ p.short_name}}</p>
 						<p class="card-text">{{ p.division }}</p>
-						<a href="{{ p.affiliate_url }}" class="btn btn-warning">ดูเพิ่มเติม</a>
+						<a href="{{p.short_name}}" class="btn btn-warning">ดูสมาชิกกอง</a>
 					</div>
 				</div>
 			</div>

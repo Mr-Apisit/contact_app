@@ -51,24 +51,11 @@ class Department(models.Model):
     name = models.CharField(max_length=200, unique=True)
     short_name = models.CharField(max_length=200, unique=True)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(
-        upload_to='picsZone',
-        blank=True,
-        help_text="Profile Picture",
-        verbose_name="Profile Picture"
-    )
+    profile_picture = models.ImageField(upload_to='picsZone', blank=True)
 
     def __str__(self):
         return self.name
 
-
-
-        # super(ModelName, self).save()
-        # profile_picture = Image.open(self.photo)
-        # (width, height) = profile_picture.size
-        # size = ( 100, 100)
-        # profile_picture = profile_picture.resize(size, Image.ANTIALIAS)
-        # image.save(self.photo.path)
 
 
 class Position(models.Model):
