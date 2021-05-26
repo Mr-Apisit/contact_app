@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 400,
@@ -85,7 +84,11 @@ TINYMCE_DEFAULT_CONFIG = {
     'contextmenu': 'formats | link image',
     'menubar': True,
     'statusbar': True,
-}
+    }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',

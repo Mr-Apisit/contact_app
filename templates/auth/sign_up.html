@@ -9,7 +9,7 @@
     <h1>ลงทะเบียนใช้งาน</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ register_form|crispy }}
+        {{ form|crispy }}
         <button class="btn btn-primary" type="submit">ลงทะเบียนใช้งาน</button>
     </form>
     <p class="text-center">ถ้ามีบัญชีผู้ใช้แล้วกดตรงนี้เลย! <a href="/login">เข้าใช้งาน</a> ทันที.</p>

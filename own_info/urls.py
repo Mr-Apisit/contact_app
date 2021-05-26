@@ -16,12 +16,9 @@ Including another URLconf
 
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
-from officer.views import logout_request
 
 urlpatterns = [
 
@@ -30,10 +27,7 @@ urlpatterns = [
     path('register/', include('officer.urls')),
     path('login/', include('officer.urls')),
     path('logout/', include('officer.urls')),
-    # path('details/', include('officer.urls')),
     path('member/', include('officer.urls')),
-    # path('accounts/', include('django.contrib.auth.urls')),
-    # path('minlogin/', LoginView.as_view(), name='minlogin'),
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
 
