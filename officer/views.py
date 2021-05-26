@@ -1,78 +1,39 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
+
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from officer.decorators import unauthenticated_user, allowed_users, admin_only
+# Create your views here.
+
+from officer.models import Department, Member
 from officer.forms import NewUserForm, UserForm, ProfileForm
 from django.contrib import messages
 from .models import Destination
-from django.contrib.auth.decorators import login_required
-# Create your views here.
-from django.contrib.auth.models import User
-import django_filters.rest_framework as backends
-from officer.models import Department
-
-#******************* 👍 Operations TARGET user  *************************#
 
 
+
+#******************* 👍 SIGN UP  *************************#
+@csrf_exempt
+@unauthenticated_user
 def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("signIn_request")
+            messages.success(request, "Registration successful." )
+            return redirect("zone")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm
-    return render(request=request, template_name="auth/sign_up.html", context={"register_form": form})
+    return render(request, "auth/sign_up.html", {"register_form": form})
 
 
-# def signUp_request(request):
-#     if request.method == 'POST':
-#         form = UserRegister(request.POST)
-#         if form.is_valid():
-#             user.refresh_from_db()
-#             user.profile.username = form.cleaned_data.get('username')
-#             user.profile.email = form.cleaned_data.get('email')
-#             user.profile.title = form.cleaned_data.get('title')
-#             user.profile.first_name = form.cleaned_data.get('first_name')
-#             user.profile.last_name = form.cleaned_data.get('last_name')
-#             user.profile.nickname = form.cleaned_data.get('nickname')
-#             user.profile.phone = form.cleaned_data.get('phone')
-#             user = form.save()
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=user.username, password=raw_password)
-#             login(request, user)
-#             messages.success(
-#                 request, f'บัญชีถูกสร้างแล้วนะ {username}ด้วย email : {email} !')
-#             return redirect('signIn_request')
-#         messages.error(
-#             request, "Unsuccessful ไม่สำเร็จ. Invalid information.")
-#     form = UserRegister()
-#     return render(request, 'auth/sign_up.html', {'signUp_request_form': form})
+#******************* 👍 SIGN IN *************************#
 
-
-# def details(request):
-#     if request.method == 'POST':
-#         form = Detail(request.POST)
-#         if form.is_valid():
-#             user.refresh_from_db()
-#             user.profile.title = form.cleaned_data.get('title')
-#             user.profile.first_name = form.cleaned_data.get('first_name')
-#             user.profile.last_name = form.cleaned_data.get('last_name')
-#             # user.profile.nickname = form.cleaned_data.get('nickname')
-#             user.profile.phone = form.cleaned_data.get('phone')
-#             # user.profile.birth_date = form.cleaned_data.get('birth_date')
-#             # user.profile.profile_picture = form.cleaned_data.get('profile_picture')
-#             user.save()
-#             first_name = user.first_name
-#             phone = user.phone
-#             messages.success(
-#                 request, f'สร้างโปรไฟล์เรียบร้อยด้วยชื่อ {first_name} เบอร์โทร : {phone} !')
-#             return redirect('zone')
-#         messages.error(
-#             request, "Unsuccessful registration. Invalid information.")
-#     form = Detail()
-#     return render(request, 'auth/sign_up.html', {'details': form})
-
-
+@csrf_exempt
+@unauthenticated_user
 def signIn_request(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -92,63 +53,49 @@ def signIn_request(request):
     return render(request=request, template_name="auth/sign_in.html", context={"signIn_request_form": form})
 
 
-# @login_required
+#******************* 👍 EXAM  *************************#
 
-# def member(request):
-#     user_form = UserForm(instance=request.user)
-#     profile_form = ProfileForm(instance=request.user.profile)
-#     return render(request=request, template_name="member/list_member.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
-
-
-# @login_required
+@login_required(login_url='sign_in')
 def index(request):
     dests = Destination.objects.all()
     return render(request, "index.html", {'dests': dests})
 
 
-@login_required
+#******************* 👍  *************************#
+
 def zone(request):
     department = Department.objects.all()
     return render(request=request, template_name="member/home.html", context={'department': department})
 
+#******************* 👍 MEMBER  *************************#
 
-# def user(request):
-#     if request.method == 'POST':
-#         user_form = userForm(request.POST, instance=request.user)
-#         profile_form = ProfileForm(request.POST, instance=request.user.profile)
-#         if user_form.is_valid():
-# 		user_form.save()
-# 		    messages.success(request, ('Your profile was successfully updated!'))
-# 		elif profile_form.is_valid():
-# 		    profile_form.save()
-# 		    messages.success(request,('Your wishlist was successfully updated!'))
-# 		else:
-# 		    messages.error(request,('Unable to complete request'))
-# 		return redirect ("user:user")
-
-# 	user_form = UserForm(instance=request.user)
-# 	profile_form = ProfileForm(instance=request.user.profile)
+def insert_member(request):
+    
+    return render(request, "member/includes/add_member.html", context={'insert_member':insert_member})
 
 
-#     return render(request = request,template_name = 'user/profile.html', context={"user":request.user,
-# 		"user_form": user_form, "profile_form": profile_form })
+@login_required(login_url='sign_in')
+def member(request):
+    member = Member.objects.all()
+    return render(request, "member/list_member.html",context={'member':member})
 
+@login_required(login_url='sign_in')
+def member_by_department_IMC(request):
+    department = Department.objects.all()
+    member = Member.objects.filter(location__name="กองวิศวกรรมซอฟต์แวร์")
+    # department_id = Department.objects.get(name=pk)
+    
+    return render(request, 'member/zone3/list_member.html', {'member':member, 'department':department})
+    
+    
+    
 
-# def list_user(request):
-#     if request.method == "POST":
-# 		position_id = request.POST.get("position_pk")
-# 		position = Product.objects.get(id = product_id)
-# 		request.user.profile.position.add(product)
-# 		messages.success(request,(f'{product} added to wishlist.'))
-# 		return redirect ('user:list_user')
-# 	position = Product.objects.all()
-# 	paginator = Paginator(position, 18)
-# 	page_number = request.GET.get('page')
-# 	page_obj = paginator.get_page(page_number)
-# 	return render(request = request, template_name="list_user.html", context = { "page_obj":page_obj})
+#******************* 👍 SIGN OUT  *************************#
 
-
+@csrf_exempt
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
-    return redirect('index')
+    return redirect('zone')
+
+

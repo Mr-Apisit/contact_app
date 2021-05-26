@@ -29,14 +29,15 @@ urlpatterns = [
     path('friends/', include('officer.urls')),
     path('register/', include('officer.urls')),
     path('login/', include('officer.urls')),
+    path('logout/', include('officer.urls')),
     # path('details/', include('officer.urls')),
     path('member/', include('officer.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('minlogin/', LoginView.as_view(), name='minlogin'),
     path('admin/', admin.site.urls),
+    path('tinymce/', include('tinymce.urls')),
 
 
 ]
-
-urlpatterns = urlpatterns + \
-    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG: #add this
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

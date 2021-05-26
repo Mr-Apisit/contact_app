@@ -6,9 +6,9 @@
   </div>
   <div class="mx-auto order-0">
     <a class="navbar-brand" href="/" style="font-size:30px">
-      <img src="{% static "img/logo.png" %}" width="35" height="35" alt="logo"> Software Center
+      <img src="{% static " img/logo.png" %}" width="35" height="35" alt="logo"> Software Center
     </a>
-    
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,16 +17,16 @@
     <ul class="navbar-nav ml-auto">
       {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="/logout/">ออกระบบ</a>
+        <a class="nav-link" href="/logout">ออกระบบ</a>
       </li>
       <li class="nav-item">
-        <a class="btn btn-outline-primary" href="/user">{{user.username|title}}</a>
+        <a class="btn btn-sm btn-outline-primary m-2" href="/user">{{user.username|title}}</a>
       </li>
       {% else %}
       <li class="nav-item">
         <a class="text-dark" href="/login">เข้าระบบ</a>
         <!--add this-->
-        <a class="btn btn-sm btn-primary m-2" href="/register">Register</a>
+        <a class="btn btn-sm btn-primary m-2" href="/register">สมัครใช้งาน</a>
       </li>
       {% endif %}
     </ul>
