@@ -1,4 +1,5 @@
 #!/bin/bash -x
+
 echo "Make Migrations"
 python manage.py makemigrations --noinput
 echo "Migrate DB"

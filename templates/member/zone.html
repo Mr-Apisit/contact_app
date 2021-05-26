@@ -1,0 +1,73 @@
+{% extends "member/header.html" %}
+
+{% block content %}
+
+{% load static %}
+
+
+<!--CTA-->
+<div class="cta-banner">
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-6 pb-4">
+				<h1 class="display-4 font-weight-bold">ศซว.ทอ.</h1>
+				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ ศูนย์ที่รวบร่วมบุคลากรมากความสามารถด้านการ ผลิด คิดค้นและ พัฒนาซอฟต์แวร์
+				</h5>
+				<a class="btn btn-primary mt-2" href="/member">หาคนร่วมทีม</a>
+			</div>
+			<div class="col-sm-12 col-md-12 col-lg-6">
+			</div>
+		</div>
+	</div>
+
+	<!--departments-->
+	<div class="container py-5">
+		<h2>หน่วยงาน</h2>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<div class="row">
+			{% for p in department %}
+			<div class="col-sm-12 col-md-6 col-lg-3 pb-4">
+				<div class="card h-100" style="border:none">
+					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.product_name}}"
+						style="width: auto; height: 250px; object-fit: scale-down;">
+					<div class="card-body">
+						<h5 class="card-title">{{ p.name}}</h5>
+						<p class="card-text text-muted" style="font-size:12px">{{ p.short_name}}</p>
+						<p class="card-text">{{ p.division }}</p>
+						<a href="{{ p.affiliate_url }}" class="btn btn-warning">ดูเพิ่มเติม</a>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+	<style>
+	    .cta-banner {
+	      	background-image:
+	      	/* The image fade to white */
+	      	linear-gradient( to left, rgba(0,0,0,0) 10%, #fff 85%),
+	      	/* The image used */
+	      	url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
+	      	/* Set a specific height */
+	     	height:420px;
+	      	/* Create the parallax scrolling effect */
+	      	background-attachment: fixed;
+	      	background-position: center bottom;
+	      	background-repeat: no-repeat;
+	      	background-size: cover;
+	      	z-index: auto;
+	      	position: relative;
+	    }
+  	</style>
+	
+
+	{% endblock %}
+
+	<!-- Optional Javascript -->
+	...

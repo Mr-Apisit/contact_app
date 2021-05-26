@@ -5,26 +5,44 @@
 {% load static %}
 
 
-<!--CTA-->
+<!-- CTA -->
+<br>
+
+<br>
 <div class="cta-banner">
-	<div class="container py-5">
+	<div class="container py-6">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-6 pb-4">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
 				<h1 class="display-4 font-weight-bold">ศซว.ทอ.</h1>
 				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ ศูนย์ที่รวบร่วมบุคลากรมากความสามารถด้านการ ผลิด คิดค้นและ พัฒนาซอฟต์แวร์
 				</h5>
-				<a class="btn btn-primary mt-2" href="/products">FIND YOUR TEAM</a>
+				<a class="btn btn-primary mt-2" href="/member">หาคนร่วมทีม</a>
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6">
 			</div>
 		</div>
 	</div>
 
-
-	<!--Products-->
+	<!--หน่วยงาน-->
 	<div class="container py-3">
-		<h2>หน่วยงานภายใน</h2>
-		<hr>
+		<br>
+		<br>
+		<br>
+
+		<br>
+		<br>
+		<br>
+		<br><br>
+		<h2>หน่วยงาน</h2>
+		<br>
+		<br>
+		<br>
 		<br>
 		<div class="row">
 			{% for p in department %}
@@ -33,38 +51,85 @@
 					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.product_name}}"
 						style="width: auto; height: 250px; object-fit: scale-down;">
 					<div class="card-body">
-						<h5 class="card-title">{{ p.name}}</h5>
+						<h7 class="card-title">{{ p.name}}</h7>
+						
 						<p class="card-text text-muted" style="font-size:12px">{{ p.short_name}}</p>
 						<p class="card-text">{{ p.division }}</p>
-						<a href="{{ p.affiliate_url }}" class="btn btn-warning">ดูเพิ่มเติม</a>
+						<a href="{{ p.short_name}}" class="btn btn-warning">ดูเพิ่มเติม</a>
 					</div>
 				</div>
 			</div>
 			{% endfor %}
 		</div>
 	</div>
-	
-	<style>
-	    .cta-banner {
-	      	background-image:
-	      	/* The image fade to white */
-	      	linear-gradient( to left, rgba(0,0,0,0) 10%, #fff 85%),
-	      	/* The image used */
-	      	url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
-	      	/* Set a specific height */
-	     	height:310px;
-	      	/* Create the parallax scrolling effect */
-	      	background-attachment: fixed;
-	      	background-position: center bottom;
-	      	background-repeat: no-repeat;
-	      	background-size: cover;
-	      	z-index: auto;
-	      	position: relative;
-	    }
-  	</style>
-	
+	<!--member-->
+	<div class="cta-right">
+	<div class="container py-2">
+		<h1 class="font-weight-bold"></h1>
 
-	{% endblock %}
+		<h2>บุคลากร</h2>
+		<br>
+		<br>
 
-	<!-- Optional Javascript -->
-	...
+		<div class="row">
+			{% for b in member %}
+			<div class="col-12 pb-4 text-dark">
+				<div class="row">
+					<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
+						<img src="{{ b.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
+					</div>
+					<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
+						<h4>{{ b.position }}</h4>
+						<p class="card-text text-muted" style="font-size:12px">{{b.title.short_name}} {{ b.first_name }} {{ b.last_name }}
+						</p>
+						<p>{{ b.article_content|safe|truncatewords:25 }}</p>
+						<button class="btn btn-outline-dark btn-sm">View details</button>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<style>
+	.cta-banner {
+		background-image:
+		/* The image fade to white */
+		linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 85%),
+		/* The image used */
+		url("{% static "img/logo.png" %}");
+		/* Set a specific height */
+		height: 600px;
+		/* Create the parallax scrolling effect */
+		background-attachment: fixed;
+		background-position: center right;
+		background-repeat: no-repeat;
+		background-size: 640px;
+		z-index: auto;
+		position: relative;
+	}
+
+	.cta-right {
+		background-image:
+		/* The image fade to white */
+		linear-gradient(to left, rgba(0, 0, 0, 0) 5%, #fff 40%),
+		/* The image used */
+		url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
+		/* Set a specific height */
+
+		/* Create the parallax scrolling effect */
+		background-attachment: fixed;
+		background-position: left bottom;
+		background-repeat: no-repeat;
+		background-size: cover;
+		z-index: auto;
+		position: relative;
+	}
+</style>
+
+
+{% endblock %}
+
+<!-- Optional Javascript -->
+...

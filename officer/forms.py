@@ -1,86 +1,71 @@
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LoginView
 from django import forms
 from django.utils.translation import gettext as _
 from django.contrib.auth.forms import UserCreationForm
 import django_filters
-from officer.models import User, Division, Department, Position, MemberProfile, Success
+from officer.models import User, Division, Department, Position, Member
 
 
 #******************* 👍 Operations TARGET MEMBER  *************************#
+class MyAuthForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MyAuthForm, self).__init__(*args, **kwargs)
+
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'autofocus': True,
+                   'class': 'form-control',
+                   'id': 'floatingInput',
+                   'placeholder': 'Username ไม่ต้องมี @email.com',
+                   'size': 30}))
+    password = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={'autocomplete': 'current-password',
+                   'class': 'form-control',
+                   'placeholder': 'password',
+                   'id': 'floatingPassword'
+                   })
+    )
 
 
 class NewUserForm(UserCreationForm):
-	email = forms.EmailField(required=True)
+    class Meta:
+        model = User
+        fields = ("phone", "username", "email", "password1", "password2")
 
-	class Meta:
-		model = User
-		fields = ("username", "email", "password1", "password2")
-
-	def save(self, commit=True):
-		user = super(NewUserForm, self).save(commit=False)
-		user.email = self.cleaned_data['email']
-		if commit:
-			user.save()
-		return user
-
-
-
-
-
-
-
-class UserRegister(UserCreationForm):
-    email = forms.EmailField(required=True, max_length=100, help_text='Email')
-    username = forms.CharField(
-        required=True, max_length=100, help_text='username')
-    title = forms.CharField(required=True, max_length=100, help_text='ยศ คำนำหน้า')
-    first_name = forms.CharField(required=True, max_length=100, help_text='ชื่อจริง')
-    last_name = forms.CharField(required=True, max_length=100, help_text='นามสกุล')
-    nick_name = forms.CharField(required=True, max_length=100, help_text='ชื่อเล่น')
-    phone = forms.CharField(required=True, max_length=100, help_text='เบอร์โทร')
-    # birth_date = forms.DateTimeField(required=True, help_text='วัน เดือน ปีเกิด')
-    # profile_picture = forms.IntegerField(help_text = 'รูปภาพโปรไฟล์')
-
-    def __init__(self, *args, **kwargs):
-        super(UserRegister, self).__init__(*args, **kwargs)
+    email = forms.EmailField(required=True)
+    phone = forms.CharField(required=True, max_length=10)
 
     error_messages = {
-        'password_mismatch': _('รหัสผ่านที่กรอกไม่เหมือนกัน'),
+        'password_mismatch': _('รหัสผ่านไม่ตรงกัน'),
     }
+    
     password1 = forms.CharField(
         label=_("Password"),
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
-        help_text=_(
-            "รหัสผ่านต้องยาวกว่า 8 ตัวอักษร ประกอบด้วยประเภทตามนี้ A,a,1,@#$!"),
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password'}),
+        help_text=_("รหัสผ่านต้องยาวกว่า 8 ตัวอักษร และมีความซับซ้อนมากพอ"),
     )
     password2 = forms.CharField(
-        label=_("Password confirmation"),
+        label=_("ยืนยัน password อีกครั้ง"),
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
         strip=False,
-        help_text=_("ใส่รหัสผ่านเดิมอีกครั้ง"),
+        help_text=_("ใส่รหัสผ่านซ้ำอีกครั้ง ให้เหมือนครั้งแรก"),
     )
 
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'email',
-            'password1',
-            'password2',
-            'title',
-            'first_name',
-            'last_name',
-            'nick_name',
-            'phone',
-            # 'birth_date',
-            # 'profile_picture',
-        )
+    # class Meta:
+    #     model = User
+    #     fields = ("phone", "username", "email", "password1", "password2")
 
-    def save(self, commit=True, max_length=100, help_text='Last Name'):
-        user = super(UserRegister, self).save(commit=False)
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
+        # user.phone = self.cleaned_data['phone']
         if commit:
             user.save()
         return user
@@ -91,13 +76,13 @@ class UserRegister(UserCreationForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'phone')
 
 
 class ProfileForm(forms.ModelForm):
 
     class Meta:
-        model = MemberProfile
+        model = Member
         fields = (
             'title',
             'first_name',

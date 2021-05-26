@@ -3,7 +3,9 @@ Django==3.2.3
 django-crispy-forms==1.11.2
 django-filter==2.4.0
 django-serializer==0.0.8
+django-tinymce4-lite==1.8.0
 djangorestframework==3.12.4
+jsmin==2.2.2
 Markdown==3.3.4
 Pillow==8.2.0
 psycopg2==2.8.6

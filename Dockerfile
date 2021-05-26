@@ -6,13 +6,13 @@ ENV PIP_NO_CACHE_DIR=1
 #     'Pillow>=8.0.0'\
 #     'django-filter>=2.4.0'\
 #     'djangorestframework>=3.12.4'\
-#     'Markdown>=3.3.4'
+#     'Markdown>=3.3.4'\
+#     'django-tinymce>=3.3.0'
 
 
-WORKDIR /code
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-
+RUN pip install --upgrade pip && pip install -r requirements.txt
+WORKDIR /code
 ADD ./entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
