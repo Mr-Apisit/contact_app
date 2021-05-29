@@ -5,11 +5,10 @@ from django.utils.timezone import datetime
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from .managers import PersonManager
-from tinymce.models import HTMLField  #add
 
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
-# from own_info import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from own_info import settings
 
 
 class User(AbstractUser):
@@ -83,30 +82,35 @@ class Tag(models.Model):
      
 class Member(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # id = models.AutoField(primary_key=True)
     title = models.ForeignKey(Rank, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     nick_name = models.CharField(max_length=200)
     phone = models.CharField(max_length=10, unique=True)
-    profile_picture = models.ImageField(upload_to='picProfile', blank=True, null=True)
-    
+    profile_picture = models.ImageField(upload_to='picProfile', blank=True, null=True)    
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     location = models.ForeignKey(Department, on_delete=models.CASCADE)
     skill_tag = models.ManyToManyField(Tag)
-    member_slug = models.SlugField()
+    about_me = models.TextField(null=True, default='')
 
     
     def __str__(self):
         return self.first_name
     
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.member
+    
+    @receiver(post_save, sender=User) #add this
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
 
-class Article(models.Model):
-	article_title = models.CharField(max_length=200)
-	article_published = models.DateTimeField('date published')
-	article_image = models.ImageField(upload_to='images/')
-	article_content = HTMLField()
-	article_slug = models.SlugField()
-
-	def __str__(self):
-		return self.article_title
+    @receiver(post_save, sender=User) #add this
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()

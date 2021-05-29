@@ -11,7 +11,6 @@ urlpatterns = [
     # path('details/', views.details, name='details'),
     path('login/', views.signIn_request, name="sign_in"),
     path("logout/", views.logout_request, name= "sign_out"),
-    path("blog/", views.blog, name="blog"),
     path("user", views.userpage, name = "userpage"),
     path('zone/', views.zone, name= "zone"),
     path('<skill_tag>/', views.blog_member, name="member"),

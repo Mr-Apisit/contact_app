@@ -68,23 +68,7 @@ def home(request):
 
 
 
-#******************* 👍  QUERY DEPARTMENT *************************#
-
-
-@login_required(login_url='sign_in')
-def zone(request):
-    department = Department.objects.all()
-    return render(request=request, template_name="member/zone.html", context={'department': department})
-
 #******************* 👍 MEMBER  *************************#
-
-def blog(request):
-	blog = Article.objects.all().order_by('-article_published')
-	paginator = Paginator(blog, 25)
-	page_number = request.GET.get('page')
-	blog_obj = paginator.get_page(page_number)
-	return render(request=request, template_name="member/blog.html", context={"blog":blog_obj})
-
 
 @login_required(login_url='sign_in')
 def blog_member(request, skill_tag):
@@ -105,13 +89,19 @@ def detail_member(request, phone):
     member = Member.objects.get(phone=phone)
     return render(request, 'member/detail.html', {'member': member})
 
-#******************* 👍 QUERY MEMBER BY DEPARTMENT  *************************#
 
-# @login_required(login_url='sign_in')
-# def list_member_by_location(request, short_name):
-#     department = Department.objects.all()
-#     member = Member.objects.get(location__short_name=short_name)
-#     return render(request, 'member/member.html', {'member':member})
+#******************* 👍  QUERY DEPARTMENT *************************#
+
+
+@login_required(login_url='sign_in')
+def zone(request):
+    department = Department.objects.all()
+    return render(request=request, template_name="member/zone.html", context={'department': department})
+
+
+
+
+#******************* 👍 QUERY MEMBER BY DEPARTMENT  *************************#
 
 
 @login_required(login_url='sign_in')
@@ -146,13 +136,13 @@ def member_by_department_COMMAND(request):
 
     return render(request, 'member/zone4/list_member.html', {'member': member, 'department': department})
 
-#******************* 👍 CREATE EDIT DELETE  *************************#
+#******************* 👍 User  CRUD *************************#
 
 @login_required(login_url='sign_in')
 def userpage(request):
     user_form = UserForm(instance=request.user)
-    member = Member.objects.all()
-    return render(request=request, template_name="member/user.html", context={"user": request.user, "user_form": user_form, "member": member})
+    profile_form = ProfileForm(instance=request.user.profile)
+    return render(request=request, template_name="member/user.html", context={"user": request.user, "user_form": user_form, "profile_form": profile_form})
 
 
 @csrf_exempt
@@ -199,10 +189,11 @@ def delete_profile(request, phone):
     logger.info('Delete member Success')
     return redirect('member')
 
+
 #******************* 👍 SIGN OUT  *************************#
 
 @csrf_exempt
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
-    return redirect('zone')
+    return redirect('/')

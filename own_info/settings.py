@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import logging.config
 import os
 from django.contrib.messages import constants as messages
+
 # from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

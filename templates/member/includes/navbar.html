@@ -4,22 +4,14 @@
   <div class="mx-auto order-0">
     <a class="navbar-brand" href="/" style="font-size:28px">
       <img src="{% static "img/logo.png" %}" height="42" alt="logo"> Software Center
-    </a>  
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
   <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
     <ul class="navbar-nav ml-auto">
-     {% if user.is_authenticated %}
-     {% for tag in nav_tags %}
-      <li class="nav-item">
-         <a class="nav-link" href="/{{ tag.tag_slug }}/">{{ tag.tag_name }}</a>
-      </li>
-    {% endfor %}
-      <li class="nav-item">
-        <a class="btn btn-outline-success" href="{% url 'add_profile' %}">เพิ่มสมาชิก</a>
-      </li>
+      {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="/search_member">หาคนร่วมงาน</a>
       </li>
@@ -43,5 +35,31 @@
       </li>
       {% endif %}
     </ul>
+  </div>
 </nav>
 
+<!--Navbar 2-->
+<div class="container-fluid sticky-top bg-dark">
+  <nav class="container navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+      <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
+        {% for tag in nav_tags %}
+        <li class="nav-item">
+          <a class="nav-link" href="/{{ tag.tag_slug }}/">{{ tag.tag_name }}</a>
+        </li>
+        {% endfor %}
+        </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+          <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="btn btn-outline-success" href="{% url 'add_profile' %}">เพิ่มสมาชิก</a>
+        </li>
+
+        {% else %}
+        <li class="nav-item">
+        </li>
+        {% endif %}
+  </nav>
+</div>
