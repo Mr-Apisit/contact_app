@@ -17,8 +17,8 @@
 				<br>
 				<br>
 				<br>
-				<h1 class="display-4 font-weight-bold">ศซว.ทอ.</h1>
-				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ<br>ศูนย์ที่รวบร่วมบุคลากร<br>ที่มากความสามารถ<br>ในด้านการ ผลิด คิดค้นและ<br>พัฒนาซอฟต์แวร์</h5>
+				<h1 class="display-4 font-weight-bold"> Make Impossible <br> To Possible</h1>
+				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ แหล่งศูนย์รวมบุคลากรมากความสามารถในด้านการ <br> - ผลิต <br> - คิดค้น<br> - พัฒนาซอฟต์แวร์</h5>
 
 				<a class="btn btn-primary mt-2" href="/search_member/">หาคนร่วมทีม</a>
 			</div>
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 	<!--หน่วยงาน-->
 	<div class="container py-3">
@@ -43,11 +43,10 @@
 		<div class="row">
 			{% for p in department %}
 			<div class="col-sm-6 col-md-6 col-lg-6 pb-4 position-relative">
-				
+
 				<div class="card h-100 position-relative" style="border:none">
-					<img src="{{ p.profile_picture.url }}" class="card-img-top position-relative" alt="{{ p.product_name}}"
-						style= "width: auto; height: 250px; object-fit: scale-down;"
-					</img>
+					<img src="{{ p.profile_picture.url }}" class="card-img-top position-relative"
+						alt="{{ p.product_name}}" style="width: auto; height: 250px; object-fit: scale-down;" </img>
 					<div class="card-body position-relative">
 						<h7 class="card-title position-relative">{{ p.name}}</h7>
 
@@ -55,115 +54,151 @@
 						<p class="card-text position-relative">{{ p.division }}</p>
 						<a href="/zone/{{p.short_name}}" class="btn btn-warning position-relative">ดูสมาชิกกอง</a>
 					</div>
-				</div>				
+				</div>
 			</div>
-			{% endfor %}
+			{% endfor %}	
+			<div class="text-right col-lg-12 col-md-12 col-sm-12 pb-1 cta-sec-banner">
+				<br>
+				<br>
+				<br>
+				<h1 class="display-4 font-weight-bold"> Right Job <br> Right People</h1>
+				<h5>บุคลากรมากความสามารถในด้านการ <br> - ผลิต <br> - คิดค้น<br> - พัฒนาซอฟต์แวร์</h5>
+
+			</div>
+			
+
 			<div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				<br><br><br>
 				<h5 class="text-primary">Developer</h5>
 				<hr>
 				{% for p in dev %}
 
-					<div class="col-12 pb-4 text-dark">
-						<div class="row">	
-							   
-							<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
-								<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
-							</div>
-							<div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
-								<h5 class="card-text">{{ p.position }}</h5>
-								{% for tag in p.skill_tag.all %}
-								<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
-								 {% endfor %}
-								<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }}  {{ b.last_name }}</p>
-								<p class="card-text">โทร. {{p.phone}}</p>
-								<p>{{ p.location|safe|truncatewords:25 }}</p>
-							   <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
-							</div>	  
-						</div>
-						<br><br>
-					</div>						  
-				{% endfor %}
-			  </div>
-			  <div class="col-lg-6 col-md-4 col-sm-8 pb-4">
-				<h5 class="text-primary">Database</h5>
-				<hr>		
-				{% for p in db %}
 				<div class="col-12 pb-4 text-dark">
-					<div class="row">	
-						   
+					<div class="row">
+
 						<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
 							<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
 						</div>
-						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
+						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
 							<h5 class="card-text">{{ p.position }}</h5>
 							{% for tag in p.skill_tag.all %}
 							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
-							 {% endfor %}
-							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }}  {{ b.last_name }}</p>
+							{% endfor %}
+							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }} {{
+								b.last_name }}</p>
 							<p class="card-text">โทร. {{p.phone}}</p>
 							<p>{{ p.location|safe|truncatewords:25 }}</p>
-						   <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
-						</div>	  
+							<a href="/member/{{p.phone}}"><button class="btn btn-outline-dark btn-sm">View
+									details</button></a>
+						</div>
 					</div>
 					<br><br>
-				</div>							  
-			  {% endfor %}
-			  </div>
-			  <div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				</div>
+				{% endfor %}
+			</div>
+			<div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				<br><br><br>
+				<h5 class="text-primary">Database</h5>
+				<hr>
+				{% for p in db %}
+				<div class="col-12 pb-4 text-dark">
+					<div class="row">
+
+						<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
+							<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
+						</div>
+						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
+							<h5 class="card-text">{{ p.position }}</h5>
+							{% for tag in p.skill_tag.all %}
+							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+							{% endfor %}
+							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }} {{
+								b.last_name }}</p>
+							<p class="card-text">โทร. {{p.phone}}</p>
+							<p>{{ p.location|safe|truncatewords:25 }}</p>
+							<a href="/member/{{p.phone}}"><button class="btn btn-outline-dark btn-sm">View
+									details</button></a>
+						</div>
+					</div>
+					<br><br>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				<br><br><br>
 				<h5 class="text-primary">Designer</h5>
 				<hr>
 				{% for p in design %}
 				<div class="col-12 pb-4 text-dark">
-					<div class="row">	
-						   
+					<div class="row">
+
 						<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
 							<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
 						</div>
-						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
+						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
 							<h5 class="card-text">{{ p.position }}</h5>
 							{% for tag in p.skill_tag.all %}
 							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
-							 {% endfor %}
-							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }}  {{ b.last_name }}</p>
+							{% endfor %}
+							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }} {{
+								b.last_name }}</p>
 							<p class="card-text">โทร. {{p.phone}}</p>
 							<p>{{ p.location|safe|truncatewords:25 }}</p>
-						   <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
-						</div>	  
+							<a href="/member/{{p.phone}}"><button class="btn btn-outline-dark btn-sm">View
+									details</button></a>
+						</div>
 					</div>
 					<br><br>
-				</div>					  
-			  {% endfor %}
-			  </div>
+				</div>
+				{% endfor %}
 			</div>
-		  </div>
+
 		</div>
-		
 	</div>
+</div>
 
 </div>
 
-	<style>
-		.cta-banner {
-			background-image:
-			/* The image fade to white */
-			linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 60%),
-			/* The image used */
-			url("{% static "img/logo.png" %}");
-			/* Set a specific height */
-			height: 480px;
-			/* Create the parallax scrolling effect */
-			background-attachment: fixed;
-			background-position: right center;
-			background-repeat: no-repeat;
-			background-size: contain;
-			z-index: auto;
-			position: relative;
-		}
-		</style>
-		
+</div>
+
+<style>
+	.cta-banner {
+		background-image:
+		/* The image fade to white */
+		linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 60%),
+		/* The image used */
+		url("{% static "img/logo.png" %}");
+		/* Set a specific height */
+		height: 480px;
+		/* Create the parallax scrolling effect */
+		background-attachment: fixed;
+		background-position: right center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		z-index: auto;
+		position: relative;
+	}
+
+	.cta-sec-banner {
+		background-image:
+		/* The image fade to white */
+		linear-gradient(to right, rgba(0, 0, 0, 0) 10%, #fff 60%),
+		/* The image used */
+		url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
+		/* Set a specific height */
+		height: 320px;
+		/* Create the parallax scrolling effect */
+		background-attachment: fixed;
+		background-position: left center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		z-index: auto;
+		position: relative;
+	}
+</style>
 
 
-	{% endblock %}
 
-	<!-- Optional Javascript -->
-	...
+{% endblock %}
+
+<!-- Optional Javascript -->

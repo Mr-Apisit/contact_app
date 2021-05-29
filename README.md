@@ -1,20 +1,14 @@
 # contact_app
-ใครที่สนใจจะใช้ docker run env clone ไปได้เลยครับ มีขั้นตอนแค่
 
-นำไฟล docker-compose.ymlไปไว่ที่เดียวกับ ||main_project|| own_info
-จากนั้นสั่งที่Terminal>> docker-compose up
-ลิ้งเริ่มต้น - /home
-
-<img width="280" height="460" src="screenshots/Screenshot%202021-05-27%20055723.png"> <img width="280" height="480" src="screenshots/Screenshot%202021-05-27%20055804.png">
-
-<img width="460" height="300" src="screenshots/Screenshot%202021-05-27%20055245.png">
-<img width="460" height="300" src="screenshots/Screenshot%202021-05-27%20055545.png">
+<img width="460" height="300" src="screenshots/3234dedf.png">
+<img width="460" height="300" src="screenshots/dfdfe34343.png">
 =======
 ใครที่สนใจจะใช้ docker run env clone ไปได้เลยครับ
 มีขั้นตอนแค่
-
-  - นำไฟล docker-compose.ymlไปไว่ที่เดียวกับ ||main_project|| own_info
-  - จากนั้นสั่งที่Terminal>> docker-compose up
+  - สร้างไฟล์ docker-compose.yml ไปไว้ที่เดียวกับ ||main_project|| คือ own_info
+  - copy text ในไฟล์ docker-compose.yml (open by note.txt ก็ได้)ไปใส่ .yml ที่เราสร้างไป
+  - จากนั้นสั่งที่Terminal >> docker-compose up
 
 ลิ้งเริ่มต้น  - /
 
+register เพื่อใช้งานด้วยค่าบ

@@ -3,8 +3,8 @@ from django import forms
 from django.utils.translation import gettext as _
 from django.contrib.auth.forms import UserCreationForm
 import django_filters
-from officer.models import User, Division, Department, Position, Member, Rank
-from tinymce.models import HTMLField  # add
+from officer.models import User, Division, Department, Position, Member, Rank, Tag, Profile
+# from tinymce.models import HTMLField  # add
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -81,27 +81,25 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'phone')
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('member',)
 
-class ProfileForm(forms.Form):
+class Member(forms.ModelForm):
     helper = FormHelper()
-
+    
     title = forms.ModelChoiceField(queryset= Member.objects.all(),to_field_name="title")
     first_name = forms.CharField()
     last_name = forms.CharField()
     nick_name = forms.CharField()
     phone = forms.CharField(max_length=10)
-    # birth_date = forms.DateField()
     profile_picture = forms.ImageField()
     position = forms.ModelChoiceField(queryset= Member.objects.all(),to_field_name="position")
     location = forms.ModelChoiceField(queryset= Department.objects.all(),to_field_name="location")
-    member_content = HTMLField()
-    member_slug = forms.SlugField()
-
-    # class Meta:
-    #     model = Member
-    #     fields = '__all__'
-
-
+    skill_tag = forms.ModelMultipleChoiceField(queryset= Tag.objects.all(),to_field_name="skill_tag")
+    about_me = forms.CharField()
+    
     class Meta:
         model = Member
         # field = '__all__'
@@ -111,14 +109,12 @@ class ProfileForm(forms.Form):
             'last_name',
             'nick_name',
             'phone',
-            # 'birth_date',
             'profile_picture',
             'location',
-            'position',      
-            'member_content',
-            'member_slug',
-        )
-    
+            'position',   
+            'skill_tag',
+            'about_me'
+        )    
     
     def __str__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
