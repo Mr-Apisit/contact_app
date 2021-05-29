@@ -22,18 +22,17 @@
 
 	<!--departments-->
 	<div class="container py-5">
-		<h2>หน่วยงาน</h2>
-
-		<br>
-		<br>
-		<br>
+		<h2 class="font-weight-bold">หน่วยงาน</h2>	
 		<br>
 		<div class="row">
 			{% for p in department %}
-			<div class="col-sm-8 col-md-12 col-lg-4 pb-1">
+			<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
 				<div class="card h-100" style="border:none">
+					<br>
+					<br>
 					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.product_name}}"
 						style="width: auto; height: 250px; object-fit: scale-down;">
+						
 					<div class="card-body">
 						<h7 class="card-title">{{ p.name}}</h7>
 
@@ -56,7 +55,7 @@
 	      	/* The image used */
 	      	url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
 	      	/* Set a specific height */
-	     	height:420px;
+	     	height:480px;
 	      	/* Create the parallax scrolling effect */
 	      	background-attachment: fixed;
 	      	background-position: center bottom;

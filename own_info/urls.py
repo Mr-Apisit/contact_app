@@ -28,7 +28,7 @@ urlpatterns = [
     # path('login/', include('officer.urls')),
     # path('logout/', include('officer.urls')),
     # path('member/', include('officer.urls')),
-    path('admin/', admin.site.urls),
+    path('Google LLC is an American multinational technology company that specializes in Internet-related services and products, which include online advertising technologies, a search engine, cloud computing, software, and hardware./admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
 
 

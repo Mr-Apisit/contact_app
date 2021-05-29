@@ -20,12 +20,13 @@
 				<h1 class="display-4 font-weight-bold">ศซว.ทอ.</h1>
 				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ<br>ศูนย์ที่รวบร่วมบุคลากร<br>ที่มากความสามารถ<br>ในด้านการ ผลิด คิดค้นและ<br>พัฒนาซอฟต์แวร์</h5>
 
-				<a class="btn btn-primary mt-2" href="/member">หาคนร่วมทีม</a>
+				<a class="btn btn-primary mt-2" href="/search_member/">หาคนร่วมทีม</a>
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6">
 			</div>
 		</div>
 	</div>
+	
 
 	<!--หน่วยงาน-->
 	<div class="container py-3">
@@ -41,55 +42,105 @@
 
 		<div class="row">
 			{% for p in department %}
-			<div class="col-sm-8 col-md-12 col-lg-4 pb-1">
-				<div class="card h-100" style="border:none">
-					<img src="{{ p.profile_picture.url }}" class="card-img-top" alt="{{ p.product_name}}"
-						style="width: auto; height: 250px; object-fit: scale-down;">
-					<div class="card-body">
-						<h7 class="card-title">{{ p.name}}</h7>
+			<div class="col-sm-6 col-md-6 col-lg-6 pb-4 position-relative">
+				
+				<div class="card h-100 position-relative" style="border:none">
+					<img src="{{ p.profile_picture.url }}" class="card-img-top position-relative" alt="{{ p.product_name}}"
+						style= "width: auto; height: 250px; object-fit: scale-down;"
+					</img>
+					<div class="card-body position-relative">
+						<h7 class="card-title position-relative">{{ p.name}}</h7>
 
-						<p class="card-text text-muted" style="font-size:12px">{{ p.short_name}}</p>
-						<p class="card-text">{{ p.division }}</p>
-						<a href="/zone/{{p.short_name}}" class="btn btn-warning">ดูสมาชิกกอง</a>
+						<p class="card-text text-muted position-relative" style="font-size:12px">{{ p.short_name}}</p>
+						<p class="card-text position-relative">{{ p.division }}</p>
+						<a href="/zone/{{p.short_name}}" class="btn btn-warning position-relative">ดูสมาชิกกอง</a>
 					</div>
-				</div>
+				</div>				
 			</div>
 			{% endfor %}
-		</div>
-	</div>
-	<!--member-->
-	<div class="cta-right">
-		<div class="container py-2">
-			<h1 class="font-weight-bold">บุคลากร</h1>
+			<div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				<h5 class="text-primary">Developer</h5>
+				<hr>
+				{% for p in dev %}
 
-
-			<br>
-			<br>
-
-			<div class="row">
-				{% for b in member %}
-				<a href="/member/{{ b.phone }}" style="text-decoration: none">
 					<div class="col-12 pb-4 text-dark">
-						<div class="row">
+						<div class="row">	
+							   
 							<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
-								<img src="{{ b.profile_picture.url }}" class="img-fluid rounded"
-									alt="{{ b.nick_name }}">
+								<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
 							</div>
-							<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
-								<h5>{{ b.position }}</h5>
-								<p class="card-text text-muted" style="font-size:12px">{{ b.location }}</p>
-								<p class="card-text text-muted" style="font-size:12px">{{ b.title }} {{b.first_name}}
-									{{b.last_name}}</p>
-								<p>{{ b.member_content|safe|truncatewords:35 }}</p>
-								<button class="btn btn-outline-dark btn-sm">ดูโปรไฟล์</button>
-							</div>
+							<div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
+								<h5 class="card-text">{{ p.position }}</h5>
+								{% for tag in p.skill_tag.all %}
+								<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+								 {% endfor %}
+								<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }}  {{ b.last_name }}</p>
+								<p class="card-text">โทร. {{p.phone}}</p>
+								<p>{{ p.location|safe|truncatewords:25 }}</p>
+							   <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
+							</div>	  
 						</div>
-					</div>
-				</a>
+						<br><br>
+					</div>						  
 				{% endfor %}
+			  </div>
+			  <div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				<h5 class="text-primary">Database</h5>
+				<hr>		
+				{% for p in db %}
+				<div class="col-12 pb-4 text-dark">
+					<div class="row">	
+						   
+						<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
+							<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
+						</div>
+						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
+							<h5 class="card-text">{{ p.position }}</h5>
+							{% for tag in p.skill_tag.all %}
+							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+							 {% endfor %}
+							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }}  {{ b.last_name }}</p>
+							<p class="card-text">โทร. {{p.phone}}</p>
+							<p>{{ p.location|safe|truncatewords:25 }}</p>
+						   <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
+						</div>	  
+					</div>
+					<br><br>
+				</div>							  
+			  {% endfor %}
+			  </div>
+			  <div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+				<h5 class="text-primary">Designer</h5>
+				<hr>
+				{% for p in design %}
+				<div class="col-12 pb-4 text-dark">
+					<div class="row">	
+						   
+						<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
+							<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
+						</div>
+						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
+							<h5 class="card-text">{{ p.position }}</h5>
+							{% for tag in p.skill_tag.all %}
+							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+							 {% endfor %}
+							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }}  {{ b.last_name }}</p>
+							<p class="card-text">โทร. {{p.phone}}</p>
+							<p>{{ p.location|safe|truncatewords:25 }}</p>
+						   <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
+						</div>	  
+					</div>
+					<br><br>
+				</div>					  
+			  {% endfor %}
+			  </div>
 			</div>
+		  </div>
 		</div>
+		
 	</div>
+
+</div>
 
 	<style>
 		.cta-banner {
@@ -109,24 +160,7 @@
 			position: relative;
 		}
 		</style>
-		<style>
-		.cta-right {
-			background-image:
-			/* The image fade to white */
-			linear-gradient(to left, rgba(0, 0, 0, 0) 5%, #fff 40%),
-			/* The image used */
-			url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
-			/* Set a specific height */
-
-			/* Create the parallax scrolling effect */
-			background-attachment: fixed;
-			background-position: left bottom;
-			background-repeat: no-repeat;
-			background-size: cover;
-			z-index: auto;
-			position: relative;
-		}
-	</style>
+		
 
 
 	{% endblock %}

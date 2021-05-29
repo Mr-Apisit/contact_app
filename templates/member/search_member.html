@@ -9,9 +9,9 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-6 pb-4">
 				<h1 class="display-4 font-weight-bold">ศซว.ทอ.</h1>
-				<h5>ศูนย์ซอฟต์แวร์กองทัพอากาศ ศูนย์ที่รวบร่วมบุคลากรมากความสามารถด้านการ ผลิด คิดค้นและ พัฒนาซอฟต์แวร์
+				<h5>บุคลากรมากความสามารถด้านการ <br>ผลิด คิดค้นและ พัฒนาซอฟต์แวร์
 				</h5>
-				<a class="btn btn-primary mt-2" href="/member">หาคนร่วมทีม</a>
+				<a class="btn btn-primary mt-2" href="">ค้นหา</a>
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6">
 			</div>
@@ -19,49 +19,79 @@
 	</div>
 
 <div class="container py-5">
-  <h1 class="font-weight-bold"></h1>
+	{% if tag %}
+	<h1 class="font-weight-bold">{{ tag }}</h1>
+	{% else %}
+  <h1 class="font-weight-bold">บุคลากร</h1>
+  {% endif %}
   <br>
   <br>
   <br>
   <br>
   <div class="row">
-    {% for b in insert_member %}
+    {% for b in member %}
     <div class="col-12 pb-4 text-dark">
-      <div class="row">
+      <div class="row">	
+		 	
           <div class="col-lg-4 col-md-6 col-sm-12 my-auto">
               <img src="{{ b.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
           </div>
-          <div class="col-lg-8 col-md-6 col-sm-12 my-auto">
-              <h5>{{ b.position }}</h5>
-              <p class="card-text text-muted" style="font-size:12px">{{ b.first_name }}  {{ b.last_name }}</p>
-              <p>{{ b.article_content|safe|truncatewords:25 }}</p>
-              <button class="btn btn-outline-dark btn-sm">View details</button>
-          </div>   
+          <div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
+              <h5 class="card-text">{{ b.position }}</h5>
+			  {% for tag in b.skill_tag.all %}
+			  <span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+			   {% endfor %}
+              <p class="card-text text-muted" style="font-size:12px">{{b.title}}{{ b.first_name }}  {{ b.last_name }}</p>
+			  <p class="card-text">โทร. {{b.phone}}</p>
+              <p>{{ b.location|safe|truncatewords:25 }}</p>
+             <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
+          </div>	  
       </div>
+	  <br><br>
   </div>
     {% endfor %}
   </div>
+    <!--Pagination-->
+	<div class="container"> 
+		<div class="pagination justify-content-center">
+			<span class="step-links">
+				{% if member.has_previous %}
+					<a href="?page=1">&laquo; first</a>
+					<a href="?page={{ member.previous_page_number }}">previous</a>
+				{% endif %}
+				<span class="current">
+					Page {{ member.number }} of {{ member.paginator.num_pages }}
+				</span>
+				{% if member.has_next %}
+					<a href="?page={{ member.next_page_number }}">next</a>
+					<a href="?page={{ member.paginator.num_pages }}">last &raquo;</a>
+				{% endif %}
+			</span>
+		</div>
+	</div>
+	<!--end of Pagination-->
 </div>
 
 
-<style>
-  .cta-banner {
-      background-image:
-      /* The image fade to white */
-      linear-gradient( to left, rgba(0,0,0,0) 10%, #fff 85%),
-      /* The image used */
-      url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
-      /* Set a specific height */
-     height:420px;
-      /* Create the parallax scrolling effect */
-      background-attachment: fixed;
-      background-position: center bottom;
-      background-repeat: no-repeat;
-      background-size: cover;
-      z-index: auto;
-      position: relative;
-  }
-</style>
+
+  <style>
+		.cta-banner {
+			background-image:
+			/* The image fade to white */
+			linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 85%),
+			/* The image used */
+			url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
+			/* Set a specific height */
+			height:480px;
+			/* Create the parallax scrolling effect */
+			background-attachment: fixed;
+			background-position: bottom;
+			background-repeat: no-repeat;
+			background-size: cover;
+			z-index: auto;
+			position: relative;
+		}
+	</style>
 
 
 {% endblock %}
