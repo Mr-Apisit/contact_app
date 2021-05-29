@@ -2,35 +2,48 @@
 {% load static %}
 {% block content %}
     <!--Article-->
+
 <br>
-    <div class="article-banner text-center"></div>
-        <br><br>
 
-        <div class="col-12 pb-4 text-dark text-center">
+    <div class="article-banner text-center">
+       
 
-            <div class="row">
+        
+    
+
+
+        <div class="col-12 pb-4 text-dark">
+            <div class="row">       
+                <div class="container">
+                    <h1 class="article-heading font-weight-bold">{{ member.location }}</h1>
+                    <br> <br><br><br><br><br><br>
                     <div class="col-sm-12 my-auto">
-                        <img src="{{ member.profile_picture.url }}" class="img-fluid rounded"
+                        <img src="{{ member.profile_picture.url }}" class="img-raised rounded-circle img-fluid"
                             alt="{{ member.nick_name }}">
                             <br>
                             <br>
                         </img>
                     </div>
                     <div class="container">
-                        <h1 class="font-weight-bold">{{ member.position }}</h1>
-                        <p></p>
                         <p class="font-weight-bold" style="font-size:20px">{{ member.title.name }} {{ member.first_name }} {{ member.last_name }}</p>
+                        <br><br>
                         <p class="font-weight-bold" style="font-size:20px">โทรติดต่อ : {{member.phone}}</p>
-                    </div>    
+                        <br>
+                        <h3 class="font-weight-bold">ทักษะการทำงาน</h3>
+                        
+                        {% for tag in member.skill_tag.all %}
+                        <span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+                         {% endfor %}
+                        <br><br>
+        
+                   
+                    </div>
+                </div>  
                 </div>
-           
+        </div>
                 </div>
     </div> 
-    <div class="container">
-                    <br>
-                    <h3 class="font-weight-bold">ทักษะความถนัด</h3>
-                    <br>
-                    <p>{{ member.member_content|safe }}</p>
+
 
 
 
@@ -38,16 +51,16 @@
         .article-banner { 
             background-image:
             /* The image fade to white */
-            linear-gradient(to left, rgba(0,0,0,0) 10%, #fff 95%),
+            linear-gradient(to left, rgba(0,0,0,0) 3%, #fff 85%),
             /* The image used */
 			url("{{member.location.profile_picture.url}}");
             /* Set a specific height */
             height:320px;
             /* Create the parallax scrolling effect */
             background-attachment: fixed;
-            background-position: center;
+            background-position: center bottom;
             background-repeat: no-repeat;
-            background-size: 60%;
+            background-size: contain;
             z-index: auto;
             position: relative;
         }

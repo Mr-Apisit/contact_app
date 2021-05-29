@@ -71,36 +71,42 @@ class Rank (models.Model):
     
     def __str__(self):
         return self.name
-        
+
+
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=15)
+    tag_slug = models.SlugField()
+ 
+    def __str__(self):
+     return self.tag_name
+ 
+     
 class Member(models.Model):
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.ForeignKey(Rank, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     nick_name = models.CharField(max_length=200)
     phone = models.CharField(max_length=10, unique=True)
-    birth_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='picProfile', blank=True, null=True)
+    
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     location = models.ForeignKey(Department, on_delete=models.CASCADE)
-    article_published = models.DateTimeField('date published' , default=datetime.now)
-    member_content = HTMLField()
+    skill_tag = models.ManyToManyField(Tag)
     member_slug = models.SlugField()
-    
 
+    
     def __str__(self):
         return self.first_name
-
-
+    
 
 
 class Article(models.Model):
-    
-    article_title = models.CharField(max_length=200)
-    article_published = models.DateTimeField('date published' , default=datetime.now)
-    article_image = models.ImageField(upload_to='images/', blank=True, null=True)
-    article_content = HTMLField()
-    article_slug = models.SlugField()
-    
-    def __str__(self):
-	    return self.article_title
-    # owner = models.ForeignKey(User, on_delete=models.CASCADE)
+	article_title = models.CharField(max_length=200)
+	article_published = models.DateTimeField('date published')
+	article_image = models.ImageField(upload_to='images/')
+	article_content = HTMLField()
+	article_slug = models.SlugField()
+
+	def __str__(self):
+		return self.article_title
