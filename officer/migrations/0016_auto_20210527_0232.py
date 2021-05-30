@@ -10,10 +10,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='member',
-            name='article_published',
-        ),
         migrations.AlterField(
             model_name='department',
             name='profile_picture',

@@ -17,21 +17,7 @@ class Migration(migrations.Migration):
                 ('tag_name', models.CharField(max_length=15)),
                 ('tag_slug', models.SlugField()),
             ],
-        ),
-        migrations.RemoveField(
-            model_name='member',
-            name='birth_date',
-        ),
-        migrations.AlterField(
-            model_name='article',
-            name='article_image',
-            field=models.ImageField(upload_to='images/'),
-        ),
-        migrations.AlterField(
-            model_name='article',
-            name='article_published',
-            field=models.DateTimeField(verbose_name='date published'),
-        ),
+        ),       
         migrations.AddField(
             model_name='member',
             name='skill_tag',
