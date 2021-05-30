@@ -88,7 +88,7 @@ def blog_member(request, skill_tag):
     else:
         tag = Tag.objects.get(tag_slug=skill_tag)
         member = Member.objects.filter(skill_tag=tag).order_by("-position")    
-    paginator = Paginator(member, 25)
+    paginator = Paginator(member, 4)
     page_number = request.GET.get('page')
     member_obj = paginator.get_page(page_number)
 
@@ -150,7 +150,7 @@ def member_by_department_COMMAND(request):
 
 @login_required(login_url='sign_in')
 def userpage(request):
-    member = request.user.member
+    member = request.user.profile
     profile_form = MemberForm(instance=member)
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
@@ -175,7 +175,9 @@ def profile_create(request):
     if request.method == "POST":
         form = MemberForm(request.POST, request.FILES)
         if form.is_valid():
-            member = form.save()
+            add_member = form.save(commit=False)
+            add_member.user = request.user
+            add_member.save()
             title = form.cleaned_data.get('title')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')

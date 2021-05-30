@@ -82,15 +82,16 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'phone')
 
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('member',)
 
 
-class MemberForm(forms.Form):
-    helper = FormHelper()    
-    title = forms.ModelChoiceField(queryset= Rank.objects.all(),to_field_name="name")
+class MemberForm(forms.ModelForm):
+    helper = FormHelper()
+    title = forms.ModelChoiceField(queryset= Rank.objects.all(),  to_field_name="name")
     first_name = forms.CharField()
     last_name = forms.CharField()
     nick_name = forms.CharField()
@@ -98,9 +99,30 @@ class MemberForm(forms.Form):
     profile_picture = forms.ImageField()
     position = forms.ModelChoiceField(queryset= Position.objects.all(),to_field_name="name")
     location = forms.ModelChoiceField(queryset= Department.objects.all(),to_field_name="name")
-    skill_tag = forms.ModelMultipleChoiceField(queryset= Tag.objects.all(),to_field_name="tag_name")
+    skill_tag = forms.ModelMultipleChoiceField(queryset= Tag.objects.all(),widget=forms.CheckboxSelectMultiple,to_field_name="tag_slug")
     about_me = forms.CharField()
 
+    class Meta:
+        model = Member
+        # field = '__all__'
+        fields = (
+            'title',
+            'first_name',
+            'last_name',
+            'nick_name',
+            'phone',
+            'profile_picture',
+            'location',
+            'position',
+            'skill_tag',
+            'about_me',
+        )
+        
+        # exclude = ['user']
+    
+    def clean_skill_tag_field(self):
+        return ','.join(self.cleaned_data['skill_tag'])
+        
     def __str__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -111,23 +133,5 @@ class MemberForm(forms.Form):
 
         self.helper.add_input(Submit('submit', 'Submit'))
         super(MemberForm, self).__init__(*args, **kwargs)
-    
-    # class Meta:
-    #     model = Member
-    #     # field = '__all__'
-    #     # exclude = ['user']
-    #     fields = (
-    #         'title',
-    #         'first_name',
-    #         'last_name',
-    #         'nick_name',
-    #         'phone',
-    #         'profile_picture',
-    #         'location',
-    #         'position',   
-    #         'skill_tag',
-    #         'about_me'
-    #     )    
-        
 
-
+   
