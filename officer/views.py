@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 # Create your views here.
 from django.conf import settings
 from officer.models import Department, Member, Tag
-from officer.forms import NewUserForm, MyAuthForm, UserForm, ProfileForm
+from officer.forms import NewUserForm, MyAuthForm, UserForm, ProfileForm, MemberForm
 from django.contrib import messages
 \
     
@@ -15,16 +15,26 @@ from django.contrib import messages
 @csrf_exempt
 @unauthenticated_user
 def register(request):
+    form = NewUserForm()
+    
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "ลงทะเบียนใช้งานสำเร็จแล้ว")
-            return redirect("home")
+            form.save()
+            username = form.cleaned_data.get('username')
+            phone = form.cleaned_data.get('phone')
+            email = form.cleaned_data.get('email')
+            # group = Group.objects.get(name='member')  
+            # user.groups.add(group)     
+            # Member.objects.create(
+            #     user=user,
+            #     phone = user.phone,              
+            #     )           
+            messages.success(request, f"ลงทะเบียนใช้งานสำเร็จแล้วด้วยเบอร์ : {username}")
+            return redirect("sign_in")
         messages.error(
             request, "ไม่สามารถลงทะเบียนได้เนื่องจากข้อมูลไม่ตรงเงื่อนไข")
-    form = NewUserForm
+
     return render(request=request, template_name="auth/sign_up.html", context={"form": form})
 
 #******************* 👍 SIGN IN *************************#
@@ -41,12 +51,12 @@ def signIn_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                messages.info(request, f"เข้าใช้งานด้วย {username}.")
                 return redirect('home')
             else:
-                messages.error(request, "Invalid username or password.")
+                messages.error(request, " username or password อาจไม่ถูกต้อง")
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, "username or password อาจไม่ถูกต้อง")
     form = MyAuthForm()
     return render(request=request, template_name="auth/sign_in.html", context={"signIn_request_form": form})
 
@@ -140,30 +150,53 @@ def member_by_department_COMMAND(request):
 
 @login_required(login_url='sign_in')
 def userpage(request):
+    member = request.user.member
+    profile_form = MemberForm(instance=member)
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=member)
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request,('Your profile was successfully updated!'))
+        elif profile_form.is_valid():
+            profile_form.save()
+            messages.success(request,('Your Profile was successfully updated!'))
+        else:
+            messages.error(request,('Unable to complete request'))
+        return redirect ("/user")
     user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)
+    # profile_form = ProfileForm(instance=request.user.profile)
     return render(request=request, template_name="member/user.html", context={"user": request.user, "user_form": user_form, "profile_form": profile_form})
 
 
-@csrf_exempt
 @login_required(login_url='sign_in')
 def profile_create(request):
+    
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES)
+        form = MemberForm(request.POST, request.FILES)
         if form.is_valid():
-            member = form.save(commit=False)
-            member.user = request.user
-            member.save()          
-            messages.success(request, "ลงทะเบียนใช้งานสำเร็จแล้ว")
-            return redirect("member")        
-        messages.error( request, "ไม่สามารถลงทะเบียนได้เนื่องจากข้อมูลไม่ตรงเงื่อนไข")   
-    member = ProfileForm        
-    return render(request, "member/add_profile.html", {"form": member})
+            member = form.save()
+            title = form.cleaned_data.get('title')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            nick_name = form.cleaned_data.get('nick_name')
+            phone = form.cleaned_data.get('phone')
+            profile_picture = form.cleaned_data.get('profile_picture')
+            position = form.cleaned_data.get('position')
+            location = form.cleaned_data.get('location')
+            skill_tag = form.cleaned_data.get('skill_tag')
+            about_me = form.cleaned_data.get('about_me')         
 
-@csrf_exempt
+            messages.success(request, f"เพิ่มโปรไฟล์ใช้งานสำเร็จแล้วนะคุณ {nick_name}")
+            return redirect ("blog_member")
+        else:          
+            messages.error( request, "ไม่สามารถลงทะเบียนได้เนื่องจากข้อมูลไม่ตรงเงื่อนไข")
+    form = MemberForm
+    return render(request, "member/add_member.html", {"form": form})
+
 @login_required(login_url='sign_in')
 def update_profile(request, phone):
-    member = Member.objects.get(pk=phone)
+    member = Member.objects.get(phone=phone)
     if member.phone != request.user.phone:
         message.error(request,"ไม่สามารถลงทะเบียนได้เนื่องจากข้อมูลไม่ตรงเงื่อนไข")
         return redirect('member')
@@ -177,7 +210,6 @@ def update_profile(request, phone):
             return render(request, 'member/update_profile.html', context)
 
 
-@csrf_exempt
 @login_required(login_url='sign_in')
 def delete_profile(request, phone):
     member = Member.objects.get(phone=phone)

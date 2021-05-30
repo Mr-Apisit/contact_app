@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.utils.translation import gettext as _
 from django.contrib.auth.forms import UserCreationForm
+from django.core.files.images import get_image_dimensions
 import django_filters
 from officer.models import User, Division, Department, Position, Member, Rank, Tag, Profile
 # from tinymce.models import HTMLField  # add
@@ -86,42 +87,47 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('member',)
 
-class Member(forms.ModelForm):
-    helper = FormHelper()
-    
-    title = forms.ModelChoiceField(queryset= Member.objects.all(),to_field_name="title")
+
+class MemberForm(forms.Form):
+    helper = FormHelper()    
+    title = forms.ModelChoiceField(queryset= Rank.objects.all(),to_field_name="name")
     first_name = forms.CharField()
     last_name = forms.CharField()
     nick_name = forms.CharField()
     phone = forms.CharField(max_length=10)
     profile_picture = forms.ImageField()
-    position = forms.ModelChoiceField(queryset= Member.objects.all(),to_field_name="position")
-    location = forms.ModelChoiceField(queryset= Department.objects.all(),to_field_name="location")
-    skill_tag = forms.ModelMultipleChoiceField(queryset= Tag.objects.all(),to_field_name="skill_tag")
+    position = forms.ModelChoiceField(queryset= Position.objects.all(),to_field_name="name")
+    location = forms.ModelChoiceField(queryset= Department.objects.all(),to_field_name="name")
+    skill_tag = forms.ModelMultipleChoiceField(queryset= Tag.objects.all(),to_field_name="tag_name")
     about_me = forms.CharField()
-    
-    class Meta:
-        model = Member
-        # field = '__all__'
-        fields = (
-            'title',
-            'first_name',
-            'last_name',
-            'nick_name',
-            'phone',
-            'profile_picture',
-            'location',
-            'position',   
-            'skill_tag',
-            'about_me'
-        )    
-    
+
     def __str__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-exampleForm'
+        self.helper.form_id = 'id-MemberForm'
         self.helper.form_class = 'blueForms'
         self.helper.form_method = 'post'
         self.helper.form_action = 'submit_survey'
 
         self.helper.add_input(Submit('submit', 'Submit'))
+        super(MemberForm, self).__init__(*args, **kwargs)
+    
+    # class Meta:
+    #     model = Member
+    #     # field = '__all__'
+    #     # exclude = ['user']
+    #     fields = (
+    #         'title',
+    #         'first_name',
+    #         'last_name',
+    #         'nick_name',
+    #         'phone',
+    #         'profile_picture',
+    #         'location',
+    #         'position',   
+    #         'skill_tag',
+    #         'about_me'
+    #     )    
+        
+
+

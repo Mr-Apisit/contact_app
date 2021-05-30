@@ -2,18 +2,18 @@
 
 {% block content %}
 
-<!-- {% load crispy_forms_tags %} -->
+{% load crispy_forms_tags %}
 
 <!--User-->
 <br><br>
 
 <!--Edit user modal-->
-<div class="container py-5">
+<div class="container mx-auto">
   <h1>เพิ่มสมาชิก</h1>
   <form method="POST">
       {% csrf_token %}
-      {% form crispy %}
-      <button class="btn btn-primary" type="submit">เพิ่ม</button>
+     {{ form | crispy }}
+      <button class="btn btn-warning" type="submit">เพิ่ม</button>
   </form>
   <p class="text-center">ยังไม่ต้องการที่จะเพิ่มกดตรงนี้เลย! <a href="/member">หน้าแรก</a> ทันที</p>
 </div>
