@@ -25,7 +25,6 @@ class User(AbstractUser):
         return self.phone
 
 
-
 class Division(models.Model):
     name = models.CharField(max_length=200, unique=True)
     short_name = models.CharField(max_length=200, unique=True)
@@ -62,7 +61,7 @@ class Rank (models.Model):
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=15)
+    tag_name = models.TextField(max_length=15)
     tag_slug = models.SlugField()
 
     def __str__(self):
@@ -76,7 +75,8 @@ class Member(models.Model):
     last_name = models.CharField(max_length=200)
     nick_name = models.CharField(max_length=200)
     phone = models.CharField(max_length=10, unique=True)
-    profile_picture = models.ImageField(upload_to='picProfile', blank=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to='picProfile', blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     location = models.ForeignKey(Department, on_delete=models.CASCADE)
     skill_tag = models.ManyToManyField(Tag)
@@ -87,8 +87,10 @@ class Member(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,null=True, blank=True, on_delete=models.CASCADE)
-    member = models.ForeignKey(Member,null=True, blank=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, null=True, blank=True, on_delete=models.CASCADE)
+    member = models.ForeignKey(
+        Member, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.member

@@ -10,7 +10,7 @@
 <!--Edit user modal-->
 <div class="container mx-auto">
   <h1>เพิ่มสมาชิก</h1>
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data" >
       {% csrf_token %}
      {{ form | crispy }}
       <button class="btn btn-warning" type="submit">เพิ่ม</button>
