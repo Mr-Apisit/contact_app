@@ -20,7 +20,7 @@
                         <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
                         <p>{{ user.email }} </p>
                         <div class="text-right">
-							<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
+							<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#userModal">แก้ไขบัญชี</button>
 						</div>                     
                       
                     </div>
@@ -34,13 +34,13 @@
                 <h2 class="font-weight-bold pt-4">โปรไฟล์</h2>
             </div>
             <div class="col-6 my-auto text-right">
-                <button type="button" class="btn btn-success font-weight-bold" style="border-radius: 5%" data-toggle="modal" data-target="#wishlistModal">จัดการโปรไฟล์</button>
+                <button type="button" class="btn btn-success font-weight-bold" style="border-radius: 5%" data-toggle="modal" data-target="#profileModal">จัดการโปรไฟล์</button>
             </div>
         </div>
         <br>
         <div class="row">
         
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-4 text-right"> 
+            <div class="col-sm-12 col-md-6 col-lg-6 pb-4 text-right"> 
                 
                     <div class="h-100">
                         <img src="{{ user.profile.members.profile_picture.url }}" class="card-img-top"
@@ -49,9 +49,14 @@
                         <div class="card-body">
 
                             <h5 class="card-title">{{user.profile.members.title.short_name}}{{ user.profile.members.first_name }} {{user.profile.members.last_name }}</h5>
+                        {% for tag in user.profile.members.skill_tag.all %}
+                        <span class="badge badge-success" style="font-size:14px; color:white">{{ tag }}</span>
+                        {% endfor %}
                             <p class="card-text text-muted" style="font-size:14px">{{user.profile.members.position.short_name}}{{user.profile.members.location.short_name}}{{user.profile.members.location.division.short_name}}</p>
-                            <a href="/member/{{ user.profile.members.phone }}"
-                                class="btn btn-warning">แก้ไข</a>
+                            <p class="card-text text-muted" style="font-size:12px">{{user.profile.members.about_me}}</p>
+                         
+                                <a type="button" class="btn btn-outline-warning btn-sm" href="/member/update/{{user.profile.members.phone}}">แก้ไขโปรไฟล์</a>
+
                         </div>
                     </div>
                 </div>
@@ -61,11 +66,11 @@
  
 
      <!--Edit user modal-->
-	<div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
+	<div class="modal fade" tabindex="-1" id="userModal" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Edit Profile</h5>
+                  <h5 class="modal-title">แก้ไขบัญชีผู้ใช้</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -84,12 +89,12 @@
         </div>
   </div>
 
-  <!--Wishlist modal-->
-	<div class="modal fade" tabindex="-1" id="wishlistModal" role="dialog">
+  <!--profile modal-->
+	<div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
 		<div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      	<div class="modal-header">
-			        <h5 class="modal-title">Edit Profile</h5>
+			        <h5 class="modal-title">เลือก โปรไฟล์</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -99,6 +104,30 @@
 			        	{% csrf_token %}
 					  	{{ profile_form|crispy }}
 					  	<span class="text-muted" style="font-size:12px">เลือกโปรไฟล์ตัวเอง</span>
+		      	</div>
+		      	<div class="modal-footer">
+		        		<button type="submit" class="btn btn-primary">Save changes</button>
+		        	</form> 
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      	</div>
+		    </div>
+	  	</div>
+
+          <!--member modal-->
+	<div class="modal fade" tabindex="-1" id="memberModal" role="dialog" aria-labelledby="memberModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+			        <h5 class="modal-title">Edit Profile</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+		      	</div>
+		      	<div class="modal-body">
+			        <form method="post" enctype="multipart/form-data">
+			        	{% csrf_token %}
+					  	{{ member_form|crispy }}
+					  
 		      	</div>
 		      	<div class="modal-footer">
 		        		<button type="submit" class="btn btn-primary">Save changes</button>

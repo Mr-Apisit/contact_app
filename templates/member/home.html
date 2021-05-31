@@ -26,6 +26,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 		{% if user.is_authenticated %}
 
@@ -89,7 +90,7 @@
 						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
 							<h5 class="card-text">{{ p.position }}</h5>
 							{% for tag in p.skill_tag.all %}
-							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+							<span class="badge badge-warning" style="font-size:14px; color:white">{{ tag }}</span>
 							{% endfor %}
 							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }} {{p.last_name }}</p>
 							<p class="card-text">โทร. {{p.phone}}</p>
@@ -116,7 +117,7 @@
 						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
 							<h5 class="card-text">{{ p.position }}</h5>
 							{% for tag in p.skill_tag.all %}
-							<span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+							<span class="badge badge-success" style="font-size:14px; color:white">{{ tag }}</span>
 							{% endfor %}
 							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }} 
 								{{p.last_name }}</p>
@@ -156,53 +157,79 @@
 				</div>
 				{% endfor %}
 			</div>
+			<div class="col-lg-6 col-md-4 col-sm-8 pb-4">
+			
+				<h5 class="text-primary">Server</h5>
+				<hr>
+				{% for p in server %}
+				<div class="col-12 pb-4 text-dark">
+					<div class="row">
+
+						<div class="col-lg-4 col-md-6 col-sm-12 my-auto">
+							<img src="{{ p.profile_picture.url }}" class="img-fluid rounded" alt="{{ p.nick_name }}" style="width: auto; height: 140px; object-fit: scale-down;">
+						</div>
+						<div class="col-lg-8 col-md-6 col-sm-12 my-auto">
+							<h5 class="card-text">{{ p.position }}</h5>
+							{% for tag in p.skill_tag.all %}
+							<span class="badge badge-danger" style="font-size:14px; color:white">{{ tag }}</span>
+							{% endfor %}
+							<p class="card-text text-muted" style="font-size:12px">{{p.title}}{{ p.first_name }} 
+								{{p.last_name }}</p>
+							<p class="card-text">โทร. {{p.phone}}</p>
+							<p>{{ p.location|safe|truncatewords:25 }}</p>
+							<a href="/member/{{p.phone}}"><button class="btn btn-outline-dark btn-sm">View
+									details</button></a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
 			{% endif %}
 		</div>
 	</div>
+	<style>
+		.cta-banner {
+			background-image:
+			/* The image fade to white */
+			linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 60%),
+			/* The image used */
+			url("{% static "img/logo.png" %}");
+			/* Set a specific height */
+			height: 480px;
+			/* Create the parallax scrolling effect */
+			background-attachment: fixed;
+			background-position: right center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			z-index: auto;
+			position: relative;
+		}.cta-sec-banner {
+			background-image:
+			/* The image fade to white */
+			linear-gradient(to right, rgba(0, 0, 0, 0) 10%, #fff 60%),
+			/* The image used */
+			url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
+			/* Set a specific height */
+			height: 420px;
+			/* Create the parallax scrolling effect */
+			background-attachment: fixed;
+			background-position: left top;
+			background-repeat: no-repeat;
+			background-size: cover;
+			z-index: auto;
+			position: relative;
+		}
+	</style>
 </div>
 
-</div>
-
-</div>
-
-<style>
-	.cta-banner {
-		background-image:
-		/* The image fade to white */
-		linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 60%),
-		/* The image used */
-		url("{% static "img/logo.png" %}");
-		/* Set a specific height */
-		height: 480px;
-		/* Create the parallax scrolling effect */
-		background-attachment: fixed;
-		background-position: right center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		z-index: auto;
-		position: relative;
-	}
-
-	.cta-sec-banner {
-		background-image:
-		/* The image fade to white */
-		linear-gradient(to right, rgba(0, 0, 0, 0) 10%, #fff 60%),
-		/* The image used */
-		url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
-		/* Set a specific height */
-		height: 420px;
-		/* Create the parallax scrolling effect */
-		background-attachment: fixed;
-		background-position: left top;
-		background-repeat: no-repeat;
-		background-size: cover;
-		z-index: auto;
-		position: relative;
-	}
-</style>
 
 
 
 {% endblock %}
+
+
+
+
+
 
 <!-- Optional Javascript -->

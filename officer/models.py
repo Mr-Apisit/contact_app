@@ -74,7 +74,7 @@ class Member(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     nick_name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=10, unique=True)
+    phone = models.CharField(max_length=12, unique=True)
     profile_picture = models.ImageField(
         upload_to='picProfile', blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
