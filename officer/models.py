@@ -1,7 +1,7 @@
 from django.db import models
 from PIL import Image
 # Create your models here.
-from django.utils.timezone import datetime
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from .managers import PersonManager
@@ -74,32 +74,34 @@ class Member(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     nick_name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=10, unique=True)
+    phone = models.CharField(max_length=12, unique=True)
     profile_picture = models.ImageField(
         upload_to='picProfile', blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     location = models.ForeignKey(Department, on_delete=models.CASCADE)
     skill_tag = models.ManyToManyField(Tag)
     about_me = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
         return self.first_name
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(
-        User, null=True, blank=True, on_delete=models.CASCADE)
-    member = models.ForeignKey(
-        Member, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    members = models.ForeignKey(Member, null=True, blank=True, on_delete=models.CASCADE)
+    
+    # def __str__(self):
+    #     return self.members
+    
 
-    def __str__(self):
-        return self.member
 
-    # @receiver(post_save, sender=User)  # add this
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         Profile.objects.create(user=instance)
 
-    # @receiver(post_save, sender=User)  # add this
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.profile.save()
+    @receiver(post_save, sender=User)  # add this
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)  # add this
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()

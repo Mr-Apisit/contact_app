@@ -86,11 +86,12 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('member',)
+        fields = ('members',)
 
 
 class MemberForm(forms.ModelForm):
     helper = FormHelper()
+    # user = forms.ModelChoiceField(queryset=User.objects.all())
     title = forms.ModelChoiceField(queryset= Rank.objects.all(),  to_field_name="name")
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -106,6 +107,7 @@ class MemberForm(forms.ModelForm):
         model = Member
         # field = '__all__'
         fields = (
+            # 'user',
             'title',
             'first_name',
             'last_name',
