@@ -65,28 +65,32 @@ def signIn_request(request):
 
 def home(request):
     department = Department.objects.all()[:6]
-    develop = Member.objects.filter(skill_tag__tag_name='นักพัฒนา')[:3]
-    database = Member.objects.filter(skill_tag__tag_name='ระบบฐานข้อมูล')[:3]
-    design = Member.objects.filter(skill_tag__tag_name='นักออกแบบ')[:3]
+    develop = Member.objects.filter(skill_tag__tag_slug='developer')[:3]
+    database = Member.objects.filter(skill_tag__tag_slug='database')[:3]
+    design = Member.objects.filter(skill_tag__tag_slug='designer')[:3]
+    server = Member.objects.filter(skill_tag__tag_slug='server')[:3]
 
     return render(request, "member/home.html", {
         'develop': develop,
         'database' : database,
         'design' : design,
-        'department': department
+        'server' : server,
+        'department': department,
         })
 
 
 
 #******************* 👍 MEMBER  *************************#
+        
 
+        
 @login_required(login_url='sign_in')
 def blog_member(request, skill_tag):
     if skill_tag == 'search_member':
         tag = ''
         member = Member.objects.all().order_by('-created_at')
 
-    else:
+    else: 
         tag = Tag.objects.get(tag_slug=skill_tag)
         member = Member.objects.filter(skill_tag=tag).order_by("-created_at")    
     paginator = Paginator(member, 4)
@@ -110,6 +114,24 @@ def zone(request):
     return render(request=request, template_name="member/zone.html", context={'department': department})
 
 
+@login_required(login_url='sign_in')
+def list_member_by_location(request,short_name):
+    if short_name == 'zone':
+        department = Department.objects.all()
+    elif short_name == 'กบสซ.':
+        member = Member.objects.filter(location__short_name="กบสซ.")
+    elif short_name == 'กวซ.':
+        member = Member.objects.filter(location__short_name="กวซ.")
+    elif short_name == 'กมซ.':
+        member = Member.objects.filter(location__short_name="กมซ.")
+    elif short_name == 'สบช.':
+        member = Member.objects.filter(location__short_name="สบช.")
+
+    paginator = Paginator(member, 4)
+    page_number = request.GET.get('page')
+    member_obj = paginator.get_page(page_number)
+    
+    return render(request, "member/search_zone.html", context={'member': member_obj, 'member': member, 'short_name': short_name})
 
 
 #******************* 👍 QUERY MEMBER BY DEPARTMENT  *************************#

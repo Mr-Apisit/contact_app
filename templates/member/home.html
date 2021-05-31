@@ -31,6 +31,7 @@
 		{% if user.is_authenticated %}
 
 	<!--หน่วยงาน-->
+	<br><br><br>
 	<div class="container py-5">
 
 	
@@ -49,7 +50,7 @@
 
 						<p class="card-text text-muted position-relative" style="font-size:12px">{{ p.short_name}}</p>
 						<p class="card-text position-relative">{{ p.division }}</p>
-						<a href="/zone/{{p.short_name}}" class="btn btn-outline-dark btn-sm position-relative">ดูสมาชิกกอง</a>
+						<a href="/home/{{p.short_name}}" class="btn btn-outline-dark btn-sm position-relative">ดูสมาชิกกอง</a>
 					</div>
 				</div>
 			</div>
@@ -198,7 +199,7 @@
 			height: 480px;
 			/* Create the parallax scrolling effect */
 			background-attachment: fixed;
-			background-position: right center;
+			background-position: bottom center;
 			background-repeat: no-repeat;
 			background-size: cover;
 			z-index: auto;
@@ -206,14 +207,14 @@
 		}.cta-sec-banner {
 			background-image:
 			/* The image fade to white */
-			linear-gradient(to right, rgba(0, 0, 0, 0) 10%, #fff 60%),
+			linear-gradient(to right, rgba(0, 0, 0, 0) 10%, #fff 85%),
 			/* The image used */
 			url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
 			/* Set a specific height */
 			height: 420px;
 			/* Create the parallax scrolling effect */
 			background-attachment: fixed;
-			background-position: left top;
+			background-position: bottom center;
 			background-repeat: no-repeat;
 			background-size: cover;
 			z-index: auto;

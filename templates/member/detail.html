@@ -1,48 +1,51 @@
 {% extends "member/header.html" %}
 {% load static %}
+
 {% block content %}
     <!--Article-->
 
-<br>
-
-    <div class="article-banner text-center">
-       
-
-        
-    
-
-
+<div class="article-banner text-center"> 
+    <div class="container py-5">
         <div class="col-12 pb-4 text-dark">
             <div class="row">       
                 <div class="container">
+                    <br> <br> <br> <br> <br> <br> <br>
                     <h1 class="article-heading font-weight-bold">{{ member.location }}</h1>
                     <br> <br><br><br><br><br><br>
-                    <div class="col-sm-12 my-auto">
-                        <img src="{{ member.profile_picture.url }}" class="img-raised rounded-circle img-fluid"
-                            alt="{{ member.nick_name }}">
+
                             <br>
                             <br>
                         </img>
                     </div>
-                    <div class="container">
-                        <p class="font-weight-bold" style="font-size:20px">{{ member.title.name }} {{ member.first_name }} {{ member.last_name }}</p>
-                        <br><br>
-                        <p class="font-weight-bold" style="font-size:20px">โทรติดต่อ : {{member.phone}}</p>
-                        <br>
-                        <h3 class="font-weight-bold">ทักษะการทำงาน</h3>
-                        
-                        {% for tag in member.skill_tag.all %}
-                        <span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
-                         {% endfor %}
-                        <br><br>
-        
-                   
-                    </div>
                 </div>  
-                </div>
+            </div>
         </div>
-                </div>
-    </div> 
+    </div>
+</div>                    
+<div class="col-sm-12 col-md-12 col-lg-12 pb-4 my-auto text-center">
+    <img src="{{ member.profile_picture.url }}" class="img-raised rounded-circle img-fluid" style="width: auto; height: 225px; object-fit: scale-down;"
+
+
+        alt="{{ member.nick_name }}">    
+        <p class="font-weight-bold" style="font-size:20px">{{ member.title.name }} {{ member.first_name }} {{ member.last_name }}</p>
+       
+        <p class="font-weight-bold" style="font-size:20px">โทรติดต่อ : {{member.phone}}</p>
+        
+        <h5 class="font-weight-bold">ทักษะการทำงาน</h5>
+                        
+        {% for tag in member.skill_tag.all %}
+        <span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
+        {% endfor %}
+        <br><br><br><br>
+        <h5 class="font-weight-bold">บอกความเป็นตัวเอง</h5>
+        <p class="font-weight-bold" style="font-size:20px"> " {{member.about_me}} "</p>
+
+
+        <br>     
+</div>
+       
+
+   
 
 
 
@@ -55,7 +58,7 @@
             /* The image used */
 			url("{{member.location.profile_picture.url}}");
             /* Set a specific height */
-            height:320px;
+            height:480px;
             /* Create the parallax scrolling effect */
             background-attachment: fixed;
             background-position: center bottom;
