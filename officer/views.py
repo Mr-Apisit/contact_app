@@ -65,13 +65,13 @@ def signIn_request(request):
 
 def home(request):
     department = Department.objects.all()[:6]
-    dev = Member.objects.filter(skill_tag__tag_name='นักพัฒนา')[:3]
-    db = Member.objects.filter(skill_tag__tag_name='ฐานข้อมูล')[:3]
+    develop = Member.objects.filter(skill_tag__tag_name='นักพัฒนา')[:3]
+    database = Member.objects.filter(skill_tag__tag_name='ระบบฐานข้อมูล')[:3]
     design = Member.objects.filter(skill_tag__tag_name='นักออกแบบ')[:3]
 
     return render(request, "member/home.html", {
-        'dev': dev,
-        'db' : db,
+        'develop': develop,
+        'database' : database,
         'design' : design,
         'department': department
         })
@@ -84,10 +84,11 @@ def home(request):
 def blog_member(request, skill_tag):
     if skill_tag == 'search_member':
         tag = ''
-        member = Member.objects.all().order_by('-position')
+        member = Member.objects.all().order_by('-created_at')
+
     else:
         tag = Tag.objects.get(tag_slug=skill_tag)
-        member = Member.objects.filter(skill_tag=tag).order_by("-position")    
+        member = Member.objects.filter(skill_tag=tag).order_by("-created_at")    
     paginator = Paginator(member, 4)
     page_number = request.GET.get('page')
     member_obj = paginator.get_page(page_number)
@@ -150,11 +151,10 @@ def member_by_department_COMMAND(request):
 
 @login_required(login_url='sign_in')
 def userpage(request):
-    member = request.user.profile
-    profile_form = MemberForm(instance=member)
     if request.method == "POST":
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=member)
+
+        user_form = UserForm(request.POST, instance=request.user)        
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid():
             user_form.save()
             messages.success(request,('Your profile was successfully updated!'))
@@ -163,10 +163,16 @@ def userpage(request):
             messages.success(request,('Your Profile was successfully updated!'))
         else:
             messages.error(request,('Unable to complete request'))
-        return redirect ("/user")
+        return redirect ("userpage")
+    # member = Member.objects.all()
     user_form = UserForm(instance=request.user)
-    # profile_form = ProfileForm(instance=request.user.profile)
-    return render(request=request, template_name="member/user.html", context={"user": request.user, "user_form": user_form, "profile_form": profile_form})
+    profile_form = ProfileForm(instance=request.user.profile)
+    return render(request=request, template_name="member/user.html", 
+                  context={
+                            "user": request.user,
+                            "user_form": user_form,
+                            "profile_form": profile_form
+                 })
 
 
 @login_required(login_url='sign_in')

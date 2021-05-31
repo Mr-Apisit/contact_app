@@ -26,30 +26,36 @@
                     </div>
                 </div>
             </div> 
-        </div>
-     </div>
-     <div class="col-sm-12 col-md-12 col-lg-7 pb-4">
+      
+  
+     <div class="col-sm-12 col-md-12 col-lg-9 pb-4">
         <div class="row">
             <div class="col-6 my-auto">
                 <h2 class="font-weight-bold pt-4">โปรไฟล์</h2>
             </div>
+            <div class="col-6 my-auto text-right">
+                <button type="button" class="btn btn-success font-weight-bold" style="border-radius: 5%" data-toggle="modal" data-target="#wishlistModal">จัดการโปรไฟล์</button>
+            </div>
         </div>
         <br>
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-4 text-right">                       
+        
+            <div class="col-sm-12 col-md-6 col-lg-4 pb-4 text-right"> 
+                
                     <div class="h-100">
-                        <img src="{{ user.profile.member.profile_picture.url }}" class="card-img-top"
-                            alt="{{ user.profile.member.nick_name}}"
+                        <img src="{{ user.profile.members.profile_picture.url }}" class="card-img-top"
+                            alt="{{ user.profile.members.nick_name}}"
                             style="width: auto; height: 225px; object-fit: scale-down;">
                         <div class="card-body">
 
-                            <h5 class="card-title">{{ user.profile.member.title.short_name}}{{ user.profile.member.first_name }} {{user.profile.member.last_name }}</h5>
-                            <p class="card-text text-muted" style="font-size:14px">{{user.profile.member.position.short_name}}{{user.profile.member.location.short_name}}{{user.profile.member.location.division.short_name}}</p>
-                            <a href="/member/{{ user.profile.member.phone }}"
+                            <h5 class="card-title">{{user.profile.members.title.short_name}}{{ user.profile.members.first_name }} {{user.profile.members.last_name }}</h5>
+                            <p class="card-text text-muted" style="font-size:14px">{{user.profile.members.position.short_name}}{{user.profile.members.location.short_name}}{{user.profile.members.location.division.short_name}}</p>
+                            <a href="/member/{{ user.profile.members.phone }}"
                                 class="btn btn-warning">แก้ไข</a>
                         </div>
                     </div>
                 </div>
+          
             </div>
         </div>
  
@@ -77,6 +83,30 @@
           </div>
         </div>
   </div>
+
+  <!--Wishlist modal-->
+	<div class="modal fade" tabindex="-1" id="wishlistModal" role="dialog">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+			        <h5 class="modal-title">Edit Profile</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+		      	</div>
+		      	<div class="modal-body">
+			        <form method="post">
+			        	{% csrf_token %}
+					  	{{ profile_form|crispy }}
+					  	<span class="text-muted" style="font-size:12px">เลือกโปรไฟล์ตัวเอง</span>
+		      	</div>
+		      	<div class="modal-footer">
+		        		<button type="submit" class="btn btn-primary">Save changes</button>
+		        	</form> 
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      	</div>
+		    </div>
+	  	</div>
 
        
             
