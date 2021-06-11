@@ -34,7 +34,7 @@
       <div class="row">	
 		 	
           <div class="col-lg-4 col-md-6 col-sm-12 my-auto">
-              <img src="{{ b.profile_picture.url }}" class="img-fluid rounded" alt="{{ b.nick_name }}">
+              <img src="{{ b.profile_picture.url }}"width="140" height="140" class="img-fluid rounded" alt="{{ b.nick_name }}">
           </div>
           <div class="col-lg-8 col-md-6 col-sm-12 my-auto">			
               <h5 class="card-text">{{ b.position }}</h5>
@@ -42,7 +42,7 @@
 			  <span class="badge badge-primary" style="font-size:14px; color:white">{{ tag }}</span>
 			   {% endfor %}
               <p class="card-text text-muted" style="font-size:12px">{{b.title}}{{ b.first_name }}  {{ b.last_name }}</p>
-			  <p class="card-text">โทร. {{b.phone}}</p>
+			  <p class="card-text">โทร. <a class="nav-link" href="tel:{{b.phone}}">{{b.phone}} <img src="{% static "img/phoneIcon0.png" %}" width="30" height="30" class="img-responsive"></a></p>
               <p>{{ b.location|safe|truncatewords:25 }}</p>
              <a  href="/member/{{b.phone}}"><button class="btn btn-outline-dark btn-sm">View details</button></a>
           </div>	  
@@ -51,25 +51,7 @@
   </div>
     {% endfor %}
   </div>
-    <!--Pagination-->
-	<div class="container"> 
-		<div class="pagination justify-content-center">
-			<span class="step-links">
-				{% if member.has_previous %}
-					<a href="?page=1">&laquo; first</a>
-					<a href="?page={{ member.previous_page_number }}">previous</a>
-				{% endif %}
-				<span class="current">
-					Page {{ member.number }} of {{ member.paginator.num_pages }}
-				</span>
-				{% if member.has_next %}
-					<a href="?page={{ member.next_page_number }}">next</a>
-					<a href="?page={{ member.paginator.num_pages }}">last &raquo;</a>
-				{% endif %}
-			</span>
-		</div>
-	</div>
-	<!--end of Pagination-->
+  
 </div>
 
 
@@ -78,13 +60,13 @@
 		.cta-banner {
 			background-image:
 			/* The image fade to white */
-			linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 85%),
+			linear-gradient(to left, rgba(165, 163, 163, 0) 0%, #fff 90%),
 			/* The image used */
 			url("{% static "img/1_zjKjIXqlWgfbSbR_SayHHA.jpeg" %}");
 			/* Set a specific height */
 			height:480px;
 			/* Create the parallax scrolling effect */
-			background-attachment: fixed;
+			background-attachment: scroll;
 			background-position: bottom;
 			background-repeat: no-repeat;
 			background-size: cover;

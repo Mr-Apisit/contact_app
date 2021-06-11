@@ -38,7 +38,7 @@
 
 						<p class="card-text text-muted" style="font-size:12px">{{ p.short_name}}</p>
 						<p class="card-text">{{ p.division }}</p>
-						<a href="{{p.short_name}}" class="btn btn-warning">ดูสมาชิกกอง</a>
+						<a href="/home/{{p.short_name}}" class="btn btn-warning">ดูสมาชิกกอง</a>
 					</div>
 				</div>
 			</div>
@@ -48,22 +48,50 @@
 
 
 	<style>
-	    .cta-banner {
-	      	background-image:
-	      	/* The image fade to white */
-	      	linear-gradient( to left, rgba(0,0,0,0) 10%, #fff 85%),
-	      	/* The image used */
-	      	url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
-	      	/* Set a specific height */
-	     	height:480px;
-	      	/* Create the parallax scrolling effect */
-	      	background-attachment: fixed;
-	      	background-position: center bottom;
-	      	background-repeat: no-repeat;
-	      	background-size: cover;
-	      	z-index: auto;
-	      	position: relative;
-	    }
+		@supports (-webkit-touch-callout: none) {
+			/* CSS specific to iOS devices */ 
+			.cta-banner {
+				
+				background-image:
+				/* The image fade to white */
+				linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 85%),
+				/* The image used */
+				url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
+				/* Set a specific height */
+				height: 480px;
+				/* Create the parallax scrolling effect */
+				background-attachment: scroll;
+				background-position: 50% 0px;
+				background-repeat: no-repeat;
+				background-size: cover;
+				z-index: auto;
+				position: relative;
+	 
+			}
+		  }
+		  
+		  @supports not (-webkit-touch-callout: none) {
+			/* CSS for other than iOS devices */ 
+			.cta-banner {
+				
+				background-image:
+				/* The image fade to white */
+				linear-gradient(to left, rgba(0, 0, 0, 0) 10%, #fff 85%),
+				/* The image used */
+				url("{% static "img/Software-Engineer-Blog-Featured-Image.jpg" %}");
+				/* Set a specific height */
+				height: 480px;
+				/* Create the parallax scrolling effect */
+				background-attachment: fixed;
+				background-position: 50% 0px;
+				background-repeat: no-repeat;
+				background-size: cover;
+				z-index: auto;
+				position: relative;
+	 
+			}
+		  }
+	   
   	</style>
 	
 
